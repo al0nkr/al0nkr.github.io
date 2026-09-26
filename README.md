@@ -26,11 +26,10 @@ python3 -m http.server 8000
 - Avatar: `https://avatars.githubusercontent.com/u/129394458?v=4` (GitHub avatar, no local image).
 - Fonts: add one entry to `SITE_FONTS` in `fonts.js` (label, CSS stack, Google Fonts URL, optional size `scale`); it appears in the nav picker automatically. Default is Rubik.
 - Themes: color tokens live at the top of `styles.css` (dark `#050e1c` default, cream `#fff0db` light via `data-theme="light"`).
-- Photo reel (reward section under Contact): drop images into `photos/` and list them in `photos/photos.json`, newest first:
-  ```json
-  [
-    { "src": "photos/beijing.jpg", "place": "Beijing, China", "caption": "Forbidden City at dusk", "date": "Jul 2025", "alt": "Palace rooftops at sunset" }
-  ]
+- Photo reel (the "press △ to rest at grace" section under Contact): drop new phone photos into `photos/` and run
+  ```bash
+  python3 tools/photos.py
   ```
-  Only `src` is required; `place` shows as the highlighted pin. Keep images around 1600px on the long edge (JPEG/WebP, under ~400 KB) so the reel loads fast. With an empty list the reel shows "Photos coming soon".
+  It uploads the untouched originals to the `photos` GitHub Release (never committed; `photos/*` is git-ignored), writes 1280px and 2560px display copies (JPEG q90, no chroma subsampling) to `photos/display/`, and adds entries to `photos/photos.json`. Then fill in `place` / `caption` there and commit `photos/photos.json` + `photos/display/`.
+  The carousel shows the display copies; clicking a photo opens the 2560px copy and swaps in the original (click again to zoom 1:1, drag to pan). Browsers that refuse Release files keep the 2560px copy and offer "Download original".
 - Contact: email only, no phone/resume per owner request. No private company metrics included.

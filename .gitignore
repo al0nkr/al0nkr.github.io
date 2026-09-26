@@ -1,0 +1,5 @@
+# Original photos live in the "photos" GitHub Release (see tools/photos.py);
+# only the manifest and the display copies are committed.
+photos/*
+!photos/photos.json
+!photos/display/

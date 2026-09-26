@@ -298,6 +298,8 @@
 
   function markCurrent(i) {
     current = i;
+    var count = document.getElementById("carousel-count");
+    if (count && photos) count.textContent = (i + 1) + " / " + photos.length;
     slides().forEach(function (s, j) { s.classList.toggle("is-current", j === i); });
     Array.prototype.forEach.call(dots.children, function (d, j) {
       d.setAttribute("aria-selected", j === i ? "true" : "false");
@@ -324,8 +326,12 @@
         var alt = p.alt || p.caption || p.place || "Photo " + (i + 1);
         return (
           '<figure class="slide" aria-roledescription="slide" aria-label="' + (i + 1) + " of " + photos.length + '">' +
-          '<button class="slide-media" type="button" data-index="' + i + '" aria-label="Enlarge: ' + escapeHtml(alt) + '">' +
-          '<img src="' + escapeHtml(p.src) + '" alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async" />' +
+          '<button class="slide-media" type="button" data-index="' + i + '" aria-label="Enlarge: ' + escapeHtml(alt) + '"' +
+          ' style="--img:url(&quot;' + escapeHtml(p.src) + '&quot;)">' +
+          '<img src="' + escapeHtml(p.src) + '"' +
+          (p.srcset ? ' srcset="' + escapeHtml(p.srcset) + '" sizes="(max-width: 560px) 84vw, 600px"' : "") +
+          (p.width && p.height ? ' width="' + p.width + '" height="' + p.height + '"' : "") +
+          ' alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async" />' +
           (p.place ? '<span class="place">' + escapeHtml(p.place) + "</span>" : "") +
           "</button>" +
           ((p.caption || p.date)
@@ -416,40 +422,93 @@
     });
   }
 
-  // Size the photo from its natural dimensions so the frame hugs it exactly.
-  function fitLightboxImg() {
-    var img = document.getElementById("lightbox-img");
-    if (!img.naturalWidth) return;
+  // Lightbox: shows the 2560px copy at once, then swaps in the untouched original
+  // (served from the GitHub Release). Click the photo to zoom to 1:1 and drag to pan.
+  // Firefox refuses Release files (served as downloads), so it stays on the copy.
+  var lbImg = document.getElementById("lightbox-img");
+  var stage = document.getElementById("lightbox-stage");
+  var resLabel = document.getElementById("lightbox-res");
+  var originalLink = document.getElementById("lightbox-original");
+  var zoomed = false;
+  var fullLoaded = {};
+
+  // The frame is sized from the photo's real dimensions, so swapping preview -> original
+  // never changes its size.
+  function frameSize() {
+    var p = photos[current];
+    var w = p.width || lbImg.naturalWidth, h = p.height || lbImg.naturalHeight;
     var maxW = Math.min(window.innerWidth * 0.94, 1200) - 2;
     var maxH = window.innerHeight * 0.94 - 64;
-    var scale = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight, 1);
-    img.style.width = Math.round(img.naturalWidth * scale) + "px";
+    var scale = Math.min(maxW / w, maxH / h, 1);
+    return { w: Math.round(w * scale), h: Math.round(h * scale) };
+  }
+
+  function layoutLightbox(focus) {
+    if (!lbImg.naturalWidth) return;
+    var f = frameSize();
+    stage.style.width = f.w + "px";
+    stage.style.height = f.h + "px";
+    var canZoom = lbImg.naturalWidth > f.w * 1.1;
+    stage.classList.toggle("can-zoom", canZoom);
+    if (!canZoom) zoomed = false;
+    stage.classList.toggle("zoomed", zoomed);
+    lbImg.style.width = (zoomed ? lbImg.naturalWidth : f.w) + "px";
+    if (zoomed && focus) {
+      stage.scrollLeft = focus.x * lbImg.naturalWidth - f.w / 2;
+      stage.scrollTop = focus.y * lbImg.naturalHeight - f.h / 2;
+    }
+  }
+
+  // Point of the photo (0..1) currently at the centre of the frame.
+  function viewCentre() {
+    var w = lbImg.offsetWidth || 1, h = lbImg.offsetHeight || 1;
+    return { x: (stage.scrollLeft + stage.clientWidth / 2) / w, y: (stage.scrollTop + stage.clientHeight / 2) / h };
   }
 
   function showInLightbox(i) {
     var p = photos[i];
     current = i;
-    var img = document.getElementById("lightbox-img");
-    img.style.width = "";
-    img.onload = fitLightboxImg;
-    img.src = p.src;
-    if (img.complete) fitLightboxImg();
-    img.alt = p.alt || p.caption || p.place || "";
+    zoomed = false;
+    lbImg.onload = function () { layoutLightbox(); };
+    lbImg.src = fullLoaded[i] ? p.full : (p.large || p.src);
+    if (lbImg.complete) layoutLightbox();
+    lbImg.alt = p.alt || p.caption || p.place || "";
     var place = document.getElementById("lightbox-place");
     place.textContent = p.place || "";
     place.hidden = !p.place;
     document.getElementById("lightbox-caption").textContent = [p.caption, p.date].filter(Boolean).join(" · ");
+    originalLink.hidden = !p.full;
+    if (p.full) originalLink.href = p.full;
     var single = photos.length < 2;
     document.getElementById("lightbox-prev").hidden = single;
     document.getElementById("lightbox-next").hidden = single;
+
+    if (!p.full || fullLoaded[i]) {
+      resLabel.textContent = p.full ? "Full resolution" : "";
+      return;
+    }
+    resLabel.textContent = "Loading full resolution…";
+    var hi = new Image();
+    hi.onload = function () {
+      fullLoaded[i] = true;
+      if (current !== i || !lightbox.open) return;
+      var focus = zoomed ? viewCentre() : null;
+      lbImg.onload = function () { layoutLightbox(focus); };
+      lbImg.src = p.full;
+      resLabel.textContent = "Full resolution";
+    };
+    hi.onerror = function () {
+      if (current === i) resLabel.textContent = "High-res preview";
+    };
+    hi.src = p.full;
   }
 
   function openLightbox(i) {
     if (!lightbox || typeof lightbox.showModal !== "function") {
-      window.open(photos[i].src, "_blank", "noopener");
+      window.open(photos[i].large || photos[i].src, "_blank", "noopener");
       return;
     }
-    showInLightbox(i);
+    showInLightbox(i); // before showModal so autofocus skips a hidden "Download original" link
     lightbox.showModal();
   }
 
@@ -464,6 +523,32 @@
     });
     lightbox.addEventListener("click", function (e) { if (e.target === lightbox) lightbox.close(); });
     lightbox.addEventListener("close", function () { goTo(current); });
-    window.addEventListener("resize", function () { if (lightbox.open) fitLightboxImg(); });
+    window.addEventListener("resize", function () { if (lightbox.open) layoutLightbox(zoomed ? viewCentre() : null); });
+
+    // Click to zoom to 1:1 at the clicked point; drag to pan while zoomed.
+    var drag = null;
+    lbImg.draggable = false; // Firefox otherwise starts a native image drag
+    stage.addEventListener("pointerdown", function (e) {
+      if (!zoomed) return;
+      e.preventDefault();
+      drag = { x: e.clientX, y: e.clientY, left: stage.scrollLeft, top: stage.scrollTop, moved: false };
+      stage.setPointerCapture(e.pointerId);
+    });
+    stage.addEventListener("pointermove", function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true;
+      stage.scrollLeft = drag.left - dx;
+      stage.scrollTop = drag.top - dy;
+    });
+    stage.addEventListener("pointerup", function () { setTimeout(function () { drag = null; }, 0); });
+    lbImg.addEventListener("click", function (e) {
+      if (drag && drag.moved) return;
+      if (!stage.classList.contains("can-zoom")) return;
+      var r = lbImg.getBoundingClientRect();
+      var focus = { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
+      zoomed = !zoomed;
+      layoutLightbox(zoomed ? focus : null);
+    });
   }
 })();
