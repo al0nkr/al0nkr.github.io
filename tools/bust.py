@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ["styles.css", "script.js", "fonts.js",
-          "favicon-32.png", "favicon-light-32.png", "favicon-64.png", "favicon-light-64.png", "apple-touch-icon.png"]
+          "favicon-32.png", "favicon-light-32.png", "favicon-64.png", "favicon-light-64.png", "apple-touch-icon.png",
+          "tarnished.webp"]
 # Images referenced from styles.css (stamped inside the CSS first, so the CSS hash covers them)
 CSS_ASSETS = ["avatar.jpg", "avatar-light.jpg"]
 PAGES = ["index.html", "404.html"]

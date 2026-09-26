@@ -315,8 +315,8 @@ h4 { font-size: 1rem; font-weight: 500; }
 /* "press △ to rest at grace": plain text that acts as the toggle */
 .grace {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5em;
   padding: 0.4rem 0.2rem;
   border: 0;
   background: none;
@@ -347,6 +347,31 @@ h4 { font-size: 1rem; font-weight: 500; }
   50% { opacity: 1; }
 }
 .grace:active .ps-triangle { transform: scale(0.92); }
+
+/* Resting: the prompt fades out and the Tarnished-at-grace scene fades in (and back). */
+.grace-prompt { display: inline-flex; align-items: center; gap: 0.5em; animation: grace-fade-in 0.5s ease backwards; }
+/* Fade-out is an animation (not a transition) so it cleanly takes over from a fade-in still running. */
+.grace.is-swapping .grace-prompt, .grace.is-swapping .grace-scene { animation: grace-fade-out 0.25s ease forwards; }
+.grace-scene { display: block; }
+.grace-scene[hidden], .grace-prompt[hidden] { display: none; }
+.grace-scene img {
+  display: block;
+  width: min(440px, 88vw);
+  height: auto;
+  animation: grace-scene-in 1s ease both, grace-scene-glow 4.5s ease-in-out 1s infinite;
+}
+/* Both scene animations use the same "brightness() drop-shadow()" filter list: WebKit
+   crashes when accelerated filter animations switch between lists of different lengths. */
+@keyframes grace-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes grace-fade-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(4px) scale(0.98); } }
+@keyframes grace-scene-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); filter: brightness(0.4) drop-shadow(0 0 0 rgb(232 200 119 / 0)); }
+  to { opacity: 1; transform: none; filter: brightness(1) drop-shadow(0 0 16px rgb(232 200 119 / 0.3)); }
+}
+@keyframes grace-scene-glow {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 16px rgb(232 200 119 / 0.3)); }
+  50% { filter: brightness(1.04) drop-shadow(0 0 26px rgb(232 200 119 / 0.5)); }
+}
 .reward-panel {
   display: grid;
   grid-template-rows: 0fr;
@@ -605,7 +630,7 @@ h4 { font-size: 1rem; font-weight: 500; }
   html { scroll-behavior: auto; }
   .repo-skeleton { animation: none; }
   .carousel-track { scroll-behavior: auto; }
-  .grace, .ps-triangle { animation: none !important; }
+  .grace, .ps-triangle, .grace-prompt, .grace-scene, .grace-scene img { animation: none !important; }
   *, *::before, *::after { transition: none !important; }
 }
 

@@ -391,19 +391,53 @@
   }
 
   if (rewardToggle && rewardPanel && track) {
+    // "press △ to rest at grace" swaps to the Tarnished-at-grace scene (and back on the
+    // next click) while the photo reel opens or collapses underneath.
+    var gracePrompt = rewardToggle.querySelector(".grace-prompt");
+    var graceScene = rewardToggle.querySelector(".grace-scene");
+    var sceneImg = graceScene && graceScene.querySelector("img");
+    var reduceMotion = function () {
+      return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    };
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    // Fetch the scene on first use and make sure it's decoded before it fades in.
+    var sceneReady = function () {
+      if (!sceneImg.getAttribute("src")) sceneImg.src = sceneImg.getAttribute("data-src");
+      var decoded = sceneImg.decode ? sceneImg.decode().catch(function () {}) : Promise.resolve();
+      return Promise.race([decoded, wait(2500)]);
+    };
+    var swapping = false;
+
     rewardToggle.addEventListener("click", function () {
+      if (swapping) return;
       var open = rewardToggle.getAttribute("aria-expanded") !== "true";
       rewardToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      rewardToggle.setAttribute("aria-label", open ? "Leave grace and close the photo reel" : "Press triangle to rest at grace");
+      rewardToggle.title = open ? "Leave grace" : "";
       rewardPanel.classList.toggle("open", open);
       if (open) rewardPanel.removeAttribute("inert");
       else rewardPanel.setAttribute("inert", "");
+
+      if (gracePrompt && graceScene && sceneImg) {
+        swapping = true;
+        rewardToggle.classList.add("is-swapping");
+        Promise.all([wait(reduceMotion() ? 0 : 250), open ? sceneReady() : null]).then(function () {
+          gracePrompt.hidden = open;
+          graceScene.hidden = !open;
+          rewardToggle.classList.remove("is-swapping");
+          swapping = false;
+        });
+      }
+
       if (open) {
-        // Carry the page down to the photos once they're rendered and the panel has grown.
-        var grown = new Promise(function (resolve) { setTimeout(resolve, 450); });
+        // Carry the page down once the photos are rendered, the panel has grown and the
+        // scene is in: show the whole section if it fits, else start from the scene.
+        var grown = wait(650);
         Promise.all([loadPhotos(), grown]).then(function () {
           if (rewardToggle.getAttribute("aria-expanded") !== "true") return;
-          var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          rewardPanel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "end" });
+          var section = document.getElementById("reward");
+          var fits = section.getBoundingClientRect().height <= window.innerHeight - 32;
+          (fits ? rewardPanel : section).scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: fits ? "end" : "start" });
         });
       }
     });

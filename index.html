@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" />
   <script src="fonts.js?v=59448b94"></script>
-  <link rel="stylesheet" href="styles.css?v=0bd2fe1b" />
+  <link rel="stylesheet" href="styles.css?v=dee878ad" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -267,13 +267,18 @@
 
     <!-- Reward: photo reel (photos listed in photos/photos.json) -->
     <section id="reward" class="reward" aria-label="Photo reel">
-      <button id="reward-toggle" class="grace" type="button" aria-expanded="false" aria-controls="reward-panel">
-        press
-        <svg class="ps-triangle" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <circle cx="16" cy="16" r="15" />
-          <path d="M16 8.5 L24 22.5 H8 Z" />
-        </svg><span class="sr-only">triangle</span>
-        to rest at grace
+      <button id="reward-toggle" class="grace" type="button" aria-expanded="false" aria-controls="reward-panel" aria-label="Press triangle to rest at grace">
+        <span class="grace-prompt">
+          press
+          <svg class="ps-triangle" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <circle cx="16" cy="16" r="15" />
+            <path d="M16 8.5 L24 22.5 H8 Z" />
+          </svg>
+          to rest at grace
+        </span>
+        <span class="grace-scene" hidden>
+          <img data-src="tarnished.webp?v=dc394e48" alt="" width="880" height="495" decoding="async" />
+        </span>
       </button>
       <div id="reward-panel" class="reward-panel" inert>
         <div class="reward-inner">
@@ -318,6 +323,6 @@
   <button id="to-top" class="icon-btn" type="button" hidden aria-label="Back to top">↑</button>
   <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
 
-  <script src="script.js?v=19445559" defer></script>
+  <script src="script.js?v=2bd4d25f" defer></script>
 </body>
 </html>
