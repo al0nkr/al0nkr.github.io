@@ -21,6 +21,12 @@
       stack: '"Ubuntu Mono", ui-monospace, monospace',
       href: "https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap",
       scale: 1.1
+    },
+    garamond: {
+      label: "EB Garamond",
+      stack: '"EB Garamond", Garamond, Georgia, serif',
+      href: "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap",
+      scale: 1.1
     }
   };
   var DEFAULT = "rubik";
