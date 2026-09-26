@@ -1,52 +1,5 @@
 [
-  {
-    "id": "20260607_175413",
-    "src": "photos/display/20260607_175413-1280.jpg",
-    "srcset": "photos/display/20260607_175413-1280.jpg 1280w, photos/display/20260607_175413-2560.jpg 2560w",
-    "large": "photos/display/20260607_175413-2560.jpg",
-    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260607_175413.jpg",
-    "width": 3000,
-    "height": 4000,
-    "date": "Jun 2026",
-    "place": "WB Studio Tour, London",
-    "caption": ""
-  },
-  {
-    "id": "20260604_205305",
-    "src": "photos/display/20260604_205305-1280.jpg",
-    "srcset": "photos/display/20260604_205305-1280.jpg 1280w, photos/display/20260604_205305-2560.jpg 2560w",
-    "large": "photos/display/20260604_205305-2560.jpg",
-    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_205305.jpg",
-    "width": 4000,
-    "height": 3000,
-    "date": "Jun 2026",
-    "place": "Westminster, London",
-    "caption": ""
-  },
-  {
-    "id": "20260604_165428",
-    "src": "photos/display/20260604_165428-1280.jpg",
-    "srcset": "photos/display/20260604_165428-1280.jpg 1280w, photos/display/20260604_165428-2560.jpg 2560w",
-    "large": "photos/display/20260604_165428-2560.jpg",
-    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_165428.jpg",
-    "width": 4000,
-    "height": 3000,
-    "date": "Jun 2026",
-    "place": "Greenwich, London",
-    "caption": ""
-  },
-  {
-    "id": "20260604_163009",
-    "src": "photos/display/20260604_163009-1280.jpg",
-    "srcset": "photos/display/20260604_163009-1280.jpg 1280w, photos/display/20260604_163009-2560.jpg 2560w",
-    "large": "photos/display/20260604_163009-2560.jpg",
-    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_163009.jpg",
-    "width": 4000,
-    "height": 3000,
-    "date": "Jun 2026",
-    "place": "Greenwich, London",
-    "caption": ""
-  },
+
   {
     "id": "20260602_211541",
     "src": "photos/display/20260602_211541-1280.jpg",
@@ -71,6 +24,19 @@
     "place": "Edinburgh, Scotland",
     "caption": ""
   },
+
+  {
+    "id": "20260604_165428",
+    "src": "photos/display/20260604_165428-1280.jpg",
+    "srcset": "photos/display/20260604_165428-1280.jpg 1280w, photos/display/20260604_165428-2560.jpg 2560w",
+    "large": "photos/display/20260604_165428-2560.jpg",
+    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_165428.jpg",
+    "width": 4000,
+    "height": 3000,
+    "date": "Jun 2026",
+    "place": "Greenwich, London",
+    "caption": ""
+  },
   {
     "id": "20260602_135733",
     "src": "photos/display/20260602_135733-1280.jpg",
@@ -84,15 +50,39 @@
     "caption": ""
   },
   {
-    "id": "20251227_144759",
-    "src": "photos/display/20251227_144759-1280.jpg",
-    "srcset": "photos/display/20251227_144759-1280.jpg 1280w, photos/display/20251227_144759-2560.jpg 2560w",
-    "large": "photos/display/20251227_144759-2560.jpg",
-    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20251227_144759.jpg",
+    "id": "20260604_205305",
+    "src": "photos/display/20260604_205305-1280.jpg",
+    "srcset": "photos/display/20260604_205305-1280.jpg 1280w, photos/display/20260604_205305-2560.jpg 2560w",
+    "large": "photos/display/20260604_205305-2560.jpg",
+    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_205305.jpg",
+    "width": 4000,
+    "height": 3000,
+    "date": "Jun 2026",
+    "place": "Westminster, London",
+    "caption": ""
+  },
+  {
+    "id": "20260604_163009",
+    "src": "photos/display/20260604_163009-1280.jpg",
+    "srcset": "photos/display/20260604_163009-1280.jpg 1280w, photos/display/20260604_163009-2560.jpg 2560w",
+    "large": "photos/display/20260604_163009-2560.jpg",
+    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260604_163009.jpg",
+    "width": 4000,
+    "height": 3000,
+    "date": "Jun 2026",
+    "place": "Greenwich, London",
+    "caption": ""
+  },
+  {
+    "id": "20260607_175413",
+    "src": "photos/display/20260607_175413-1280.jpg",
+    "srcset": "photos/display/20260607_175413-1280.jpg 1280w, photos/display/20260607_175413-2560.jpg 2560w",
+    "large": "photos/display/20260607_175413-2560.jpg",
+    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20260607_175413.jpg",
     "width": 3000,
     "height": 4000,
-    "date": "Dec 2025",
-    "place": "Legoland, Windsor",
+    "date": "Jun 2026",
+    "place": "WB Studio Tour, London",
     "caption": ""
   },
   {
@@ -108,6 +98,18 @@
     "caption": ""
   },
   {
+    "id": "20251227_144759",
+    "src": "photos/display/20251227_144759-1280.jpg",
+    "srcset": "photos/display/20251227_144759-1280.jpg 1280w, photos/display/20251227_144759-2560.jpg 2560w",
+    "large": "photos/display/20251227_144759-2560.jpg",
+    "full": "https://github.com/al0nkr/al0nkr.github.io/releases/download/photos/20251227_144759.jpg",
+    "width": 3000,
+    "height": 4000,
+    "date": "Dec 2025",
+    "place": "Legoland, Windsor",
+    "caption": ""
+  },
+  {
     "id": "20250725_183210",
     "src": "photos/display/20250725_183210-1280.jpg",
     "srcset": "photos/display/20250725_183210-1280.jpg 1280w, photos/display/20250725_183210-2560.jpg 2560w",
@@ -116,7 +118,7 @@
     "width": 4000,
     "height": 3000,
     "date": "Jul 2025",
-    "place": "China",
+    "place": "Xi'An, China",
     "caption": ""
   },
   {
@@ -152,7 +154,7 @@
     "width": 3000,
     "height": 4000,
     "date": "Jan 2025",
-    "place": "Kolkata",
+    "place": "Kolkata, Italy >.<",
     "caption": ""
   }
 ]
