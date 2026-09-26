@@ -36,16 +36,20 @@
     return null;
   }
 
+  function loadFont(id) {
+    var font = FONTS[id];
+    if (!font.href || document.getElementById("font-" + id)) return;
+    var link = document.createElement("link");
+    link.id = "font-" + id;
+    link.rel = "stylesheet";
+    link.href = font.href;
+    document.head.appendChild(link);
+  }
+
   function applySiteFont(id, persist) {
     if (!FONTS[id]) id = DEFAULT;
     var font = FONTS[id];
-    if (font.href && !document.getElementById("font-" + id)) {
-      var link = document.createElement("link");
-      link.id = "font-" + id;
-      link.rel = "stylesheet";
-      link.href = font.href;
-      document.head.appendChild(link);
-    }
+    loadFont(id);
     root.style.setProperty("--font", font.stack);
     root.style.setProperty("--font-scale", String(font.scale || 1));
     root.setAttribute("data-font", id);
@@ -58,5 +62,6 @@
   window.applySiteFont = applySiteFont;
 
   if (store(THEME_KEY) === "light") root.setAttribute("data-theme", "light");
+  loadFont(DEFAULT); // the header always uses the default font (--ui-font)
   applySiteFont(store(FONT_KEY) || DEFAULT, false);
 })();
