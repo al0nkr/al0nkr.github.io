@@ -27,6 +27,12 @@
       stack: '"EB Garamond", Garamond, Georgia, serif',
       href: "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap",
       scale: 1.1
+    },
+    newsreader: {
+      label: "Newsreader",
+      stack: '"Newsreader", Georgia, serif',
+      href: "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap",
+      scale: 1.04
     }
   };
   var DEFAULT = "rubik";
