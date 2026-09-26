@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" fill="#23252b"/>
+  <rect width="100" height="100" fill="#f3d7ae"/>
   <g transform="rotate(15 34 70)">
     <!-- back hair: a rim just larger than the face, reads as a bob -->
-    <circle cx="34" cy="70" r="52" fill="#9e8ad7"/>
+    <circle cx="34" cy="70" r="52" fill="#8a74c8"/>
     <!-- face: big round, cropped at left and bottom -->
-    <circle cx="34" cy="70" r="46" fill="#f4e7d2"/>
+    <circle cx="34" cy="70" r="46" fill="#fffaf1"/>
     <!-- bangs + side lock: one flat pastel shape, stepped fringe (identicon nod) -->
     <path d="M-20 70 A54 54 0 0 1 81 44
              Q80 49 73 49 L61 49 L61 43 L49 43 L49 51 L37 51 L37 44 L25 44 L25 52 L13 52
-             Q6 76 10 104 L-20 104 Z" fill="#b3a1e8"/>
+             Q6 76 10 104 L-20 104 Z" fill="#9e8ad7"/>
     <!-- faint oval blush -->
-    <ellipse cx="29" cy="90" rx="7.5" ry="4.2" fill="#f0a3a0" opacity="0.45"/>
-    <ellipse cx="68" cy="89" rx="7" ry="4.2" fill="#f0a3a0" opacity="0.45"/>
+    <ellipse cx="29" cy="90" rx="7.5" ry="4.2" fill="#ee9c96" opacity="0.5"/>
+    <ellipse cx="68" cy="89" rx="7" ry="4.2" fill="#ee9c96" opacity="0.5"/>
     <!-- capsule eyes, 3:1, parallel -->
-    <rect x="41" y="59" width="8" height="24" rx="4" fill="#15161a"/>
-    <rect x="59" y="59" width="8" height="24" rx="4" fill="#15161a"/>
+    <rect x="41" y="59" width="8" height="24" rx="4" fill="#2b2118"/>
+    <rect x="59" y="59" width="8" height="24" rx="4" fill="#2b2118"/>
   </g>
 </svg>

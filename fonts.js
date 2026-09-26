@@ -69,10 +69,26 @@
     return id;
   }
 
+  // Tab icon follows the site theme (not the OS): each <link rel="icon"> carries
+  // data-dark / data-light URLs. Replacing the node makes browsers repaint the tab.
+  function syncFavicon() {
+    var mode = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+    var links = document.querySelectorAll('link[rel="icon"][data-' + mode + "]");
+    Array.prototype.forEach.call(links, function (link) {
+      var href = link.getAttribute("data-" + mode);
+      if (link.getAttribute("href") === href) return;
+      var fresh = link.cloneNode();
+      fresh.setAttribute("href", href);
+      link.parentNode.replaceChild(fresh, link);
+    });
+  }
+
   window.SITE_FONTS = FONTS;
+  window.syncFavicon = syncFavicon;
   window.SITE_FONT_DEFAULT = DEFAULT;
   window.applySiteFont = applySiteFont;
 
   if (store(THEME_KEY) === "light") root.setAttribute("data-theme", "light");
+  syncFavicon();
   applySiteFont(store(FONT_KEY) || DEFAULT, false);
 })();

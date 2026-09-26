@@ -14,6 +14,7 @@
   function syncThemeBtn() {
     var isLight = root.getAttribute("data-theme") === "light";
     if (themeMeta) themeMeta.setAttribute("content", isLight ? "#fff0db" : "#050e1c");
+    if (window.syncFavicon) window.syncFavicon();
     if (!themeBtn) return;
     themeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
     themeBtn.querySelector(".theme-label").textContent = isLight ? "Dark mode" : "Light mode";

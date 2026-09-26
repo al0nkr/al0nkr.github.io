@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stamp asset links with a content hash so browsers pick up changes immediately.
+"""Stamp asset links (CSS, JS, tab icons) with a content hash so browsers pick up changes immediately.
 
 GitHub Pages serves files with `Cache-Control: max-age=600`, so without this a
 visitor can see a stale styles.css / script.js / fonts.js for up to 10 minutes
@@ -13,7 +13,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSETS = ["styles.css", "script.js", "fonts.js"]
+ASSETS = ["styles.css", "script.js", "fonts.js",
+          "favicon.svg", "favicon-light.svg", "favicon-32.png", "favicon-light-32.png", "apple-touch-icon.png"]
 PAGES = ["index.html", "404.html"]
 
 
