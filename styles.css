@@ -190,6 +190,23 @@ h4 { font-size: 1rem; font-weight: 500; }
 /* ---------- Hero ---------- */
 .hero { display: flex; gap: 2rem; align-items: center; margin-top: 0; }
 .avatar { width: 112px; height: 112px; border-radius: 50%; border: 1px solid var(--line); flex-shrink: 0; }
+/* Bot-face avatar (same art as the tab icon); colours follow the site theme. */
+.bot-avatar {
+  --bot-bg: #23252b; --bot-face: #f4e7d2; --bot-hair: #b3a1e8; --bot-hair-shade: #9e8ad7;
+  --bot-blush: #f0a3a0; --bot-blush-op: 0.45; --bot-eye: #15161a;
+  display: block;
+  overflow: hidden;
+}
+[data-theme="light"] .bot-avatar {
+  --bot-bg: #f3d7ae; --bot-face: #fffaf1; --bot-hair: #9e8ad7; --bot-hair-shade: #8a74c8;
+  --bot-blush: #ee9c96; --bot-blush-op: 0.5; --bot-eye: #2b2118;
+}
+.bot-avatar .bot-bg { fill: var(--bot-bg); }
+.bot-avatar .bot-face { fill: var(--bot-face); }
+.bot-avatar .bot-hair { fill: var(--bot-hair); }
+.bot-avatar .bot-hair-shade { fill: var(--bot-hair-shade); }
+.bot-avatar .bot-blush { fill: var(--bot-blush); opacity: var(--bot-blush-op); }
+.bot-avatar .bot-eye { fill: var(--bot-eye); }
 .subtitle { color: var(--muted); margin: 0.3rem 0 0.9rem; font-size: 1.05rem; }
 .hero-text p:not(.subtitle) { max-width: 38em; }
 .cta-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.4rem; }
