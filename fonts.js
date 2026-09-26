@@ -62,6 +62,5 @@
   window.applySiteFont = applySiteFont;
 
   if (store(THEME_KEY) === "light") root.setAttribute("data-theme", "light");
-  loadFont(DEFAULT); // the header always uses the default font (--ui-font)
   applySiteFont(store(FONT_KEY) || DEFAULT, false);
 })();
