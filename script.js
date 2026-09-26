@@ -348,14 +348,16 @@
     requestAnimationFrame(function () { goTo(0); });
   }
 
+  var photosReady = null;
   function loadPhotos() {
-    if (photos) return;
+    if (photosReady) return photosReady;
     photos = [];
-    fetch("photos/photos.json", { cache: "no-cache" })
+    photosReady = fetch("photos/photos.json", { cache: "no-cache" })
       .then(function (res) { return res.ok ? res.json() : []; })
       .then(function (list) { photos = Array.isArray(list) ? list.filter(function (p) { return p && p.src; }) : []; })
       .catch(function () { photos = []; })
       .then(renderPhotos);
+    return photosReady;
   }
 
   if (rewardToggle && rewardPanel && track) {
@@ -365,8 +367,15 @@
       rewardPanel.classList.toggle("open", open);
       if (open) rewardPanel.removeAttribute("inert");
       else rewardPanel.setAttribute("inert", "");
-      rewardToggle.firstChild.textContent = open ? "Close the photo reel " : "Open the photo reel ";
-      if (open) loadPhotos();
+      if (open) {
+        // Carry the page down to the photos once they're rendered and the panel has grown.
+        var grown = new Promise(function (resolve) { setTimeout(resolve, 450); });
+        Promise.all([loadPhotos(), grown]).then(function () {
+          if (rewardToggle.getAttribute("aria-expanded") !== "true") return;
+          var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          rewardPanel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "end" });
+        });
+      }
     });
 
     document.getElementById("carousel-prev").addEventListener("click", function () { goTo(current - 1); });

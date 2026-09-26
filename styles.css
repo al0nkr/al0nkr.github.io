@@ -263,16 +263,30 @@ h4 { font-size: 1rem; font-weight: 500; }
 
 /* ---------- Reward: photo reel ---------- */
 .reward { text-align: center; margin-top: 5rem; }
-.reward-teaser { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.8rem; }
-.chev {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: translateY(-25%) rotate(45deg);
-  transition: transform 0.25s;
+/* "press △ to rest at grace": plain text that acts as the toggle */
+.grace {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.4rem 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 500 1.15rem/1.2 "Cinzel", Georgia, serif;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.3s, text-shadow 0.3s;
 }
-[aria-expanded="true"] .chev { transform: translateY(25%) rotate(-135deg); }
+.grace:hover, .grace[aria-expanded="true"] {
+  color: #e8c877;
+  text-shadow: 0 0 14px rgb(232 200 119 / 0.45);
+}
+[data-theme="light"] .grace:hover, [data-theme="light"] .grace[aria-expanded="true"] { color: #8a6412; text-shadow: none; }
+.ps-triangle { width: 1.55em; height: 1.55em; flex-shrink: 0; overflow: visible; }
+.ps-triangle circle { fill: #11151c; stroke: #2c3442; stroke-width: 1.5; }
+.ps-triangle path { fill: none; stroke: #3fd3a4; stroke-width: 2.2; stroke-linejoin: round; }
+.grace:hover .ps-triangle, .grace[aria-expanded="true"] .ps-triangle { filter: drop-shadow(0 0 6px rgb(63 211 164 / 0.55)); }
+.grace:active .ps-triangle { transform: scale(0.92); }
 .reward-panel {
   display: grid;
   grid-template-rows: 0fr;

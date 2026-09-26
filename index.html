@@ -22,6 +22,7 @@
   <link rel="dns-prefetch" href="https://api.github.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" />
   <script src="fonts.js"></script>
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
@@ -246,10 +247,14 @@
     </section>
 
     <!-- Reward: photo reel (photos listed in photos/photos.json) -->
-    <section id="reward" class="reward" aria-labelledby="reward-title">
-      <p class="reward-teaser" id="reward-title">You made it all the way down. Here’s your reward.</p>
-      <button id="reward-toggle" class="btn-ghost" type="button" aria-expanded="false" aria-controls="reward-panel">
-        Open the photo reel <span class="chev" aria-hidden="true"></span>
+    <section id="reward" class="reward" aria-label="Photo reel">
+      <button id="reward-toggle" class="grace" type="button" aria-expanded="false" aria-controls="reward-panel">
+        press
+        <svg class="ps-triangle" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <circle cx="16" cy="16" r="15" />
+          <path d="M16 8.5 L24 22.5 H8 Z" />
+        </svg><span class="sr-only">triangle</span>
+        to rest at grace
       </button>
       <div id="reward-panel" class="reward-panel" inert>
         <div class="reward-inner">
