@@ -13,7 +13,7 @@
   var STORE_KEY = "al0nkr-theme";
   function syncThemeBtn() {
     var isLight = root.getAttribute("data-theme") === "light";
-    if (themeMeta) themeMeta.setAttribute("content", isLight ? "#f6f0e1" : "#050e1c");
+    if (themeMeta) themeMeta.setAttribute("content", isLight ? "#fff0db" : "#050e1c");
     if (!themeBtn) return;
     themeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
     themeBtn.textContent = isLight ? "☾" : "☀";
@@ -173,7 +173,7 @@
           return (
             '<div class="repo">' +
             '<a href="' + escapeHtml(r.html_url) + '" target="_blank" rel="noopener">' + escapeHtml(r.name) + "</a>" +
-            "<p>" + (r.description ? escapeHtml(r.description) : "No description.") + "</p>" +
+            (r.description ? "<p>" + escapeHtml(r.description) + "</p>" : "") +
             '<span class="lang">' + escapeHtml(r.language || "") +
             (r.stargazers_count ? " ★ " + escapeHtml(r.stargazers_count) : "") + "</span>" +
             (updated ? '<span class="updated">Updated ' + escapeHtml(updated) + (stale ? " · cached" : "") + "</span>" : "") +

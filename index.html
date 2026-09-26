@@ -47,12 +47,6 @@
   <header class="site-header">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top">Alankar Dutta</a>
-      <div class="nav-actions">
-        <label class="sr-only" for="font-select">Font</label>
-        <select id="font-select" title="Font"></select>
-        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle light mode" title="Switch to light mode">☀</button>
-        <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">Menu</button>
-      </div>
       <div class="nav-links" id="nav-links">
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
@@ -60,7 +54,12 @@
         <a href="#education">Education</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
-        <a href="https://github.com/al0nkr" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="nav-actions">
+        <label class="sr-only" for="font-select">Font</label>
+        <span class="select-wrap"><select id="font-select" title="Font"></select></span>
+        <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Toggle light mode" title="Switch to light mode">☀</button>
+        <button id="nav-toggle" class="icon-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation" title="Menu">☰</button>
       </div>
     </nav>
   </header>
@@ -68,8 +67,8 @@
   <main id="main" class="container" tabindex="-1">
     <!-- Hero / About -->
     <section class="hero" aria-labelledby="intro-heading">
-      <img class="avatar" src="https://avatars.githubusercontent.com/u/129394458?v=4" alt="GitHub avatar of Alankar Dutta" width="128" height="128" fetchpriority="high" decoding="async" onerror="this.style.display='none'" />
-      <div>
+      <img class="avatar" src="https://avatars.githubusercontent.com/u/129394458?v=4" alt="GitHub avatar of Alankar Dutta" width="112" height="112" fetchpriority="high" decoding="async" onerror="this.style.display='none'" />
+      <div class="hero-text">
         <h1 id="intro-heading">Alankar Dutta</h1>
         <p class="subtitle">Lead ML Engineer, Invigilo Technologies</p>
         <p>
@@ -79,58 +78,54 @@
         <div class="cta-row">
           <a class="btn" href="mailto:alankardutta@gmail.com">alankardutta@gmail.com</a>
           <button class="btn-ghost" id="copy-email" type="button" data-email="alankardutta@gmail.com" aria-live="polite">Copy email</button>
-          <a class="link" href="https://github.com/al0nkr" target="_blank" rel="noopener">github.com/al0nkr</a>
-          <span class="sep" aria-hidden="true">·</span>
-          <a class="link" href="https://www.linkedin.com/in/alankar-dutta/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn-ghost" href="https://github.com/al0nkr" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn-ghost" href="https://www.linkedin.com/in/alankar-dutta/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </section>
 
     <!-- Experience -->
     <section id="experience">
-      <h2>Where I work</h2>
-
-      <article class="entry">
-        <div class="entry-head">
-          <div>
+      <h2>Experience</h2>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-head">
             <h3>Invigilo Technologies</h3>
-            <p class="meta">Remote (Singapore)</p>
+            <span class="date">Apr 2024 — Present</span>
           </div>
-          <p class="date">Apr 2024 — Present</p>
-        </div>
+          <p class="meta">Remote (Singapore)</p>
 
-        <h4>Lead ML Engineer <span class="date-inline">— Present</span></h4>
-        <ul>
-          <li>Lead a 6-engineer ML team shipping weekly AI features to production.</li>
-          <li>Architect real-time C++/Python detection pipelines and GPU inference services.</li>
-        </ul>
+          <div class="role"><h4>Lead ML Engineer</h4><span class="date">Present</span></div>
+          <ul>
+            <li>Lead a 6-engineer ML team shipping weekly AI features to production.</li>
+            <li>Architect real-time C++/Python detection pipelines and GPU inference services.</li>
+          </ul>
 
-        <h4>ML Engineer <span class="date-inline">Jul 2025 — Dec 2025</span></h4>
-        <ul>
-          <li>Built a Vision-LLM server for open-vocabulary detection.</li>
-          <li>Integrated person re-identification into the C++ SDK.</li>
-        </ul>
+          <div class="role"><h4>ML Engineer</h4><span class="date">Jul 2025 — Dec 2025</span></div>
+          <ul>
+            <li>Built a Vision-LLM server for open-vocabulary detection.</li>
+            <li>Integrated person re-identification into the C++ SDK.</li>
+          </ul>
 
-        <h4>ML Engineering Intern <span class="date-inline">Apr 2024 — Jul 2025</span></h4>
-        <ul>
-          <li>Built a PyTorch/FastAPI face-recognition service.</li>
-          <li>Rewrote multi-stream inference hot paths in C++.</li>
-        </ul>
-        <p class="note">Promoted intern → engineer → lead within 21 months.</p>
-      </article>
+          <div class="role"><h4>ML Engineering Intern</h4><span class="date">Apr 2024 — Jul 2025</span></div>
+          <ul>
+            <li>Built a PyTorch/FastAPI face-recognition service.</li>
+            <li>Rewrote multi-stream inference hot paths in C++.</li>
+          </ul>
+          <p class="note">Promoted intern → engineer → lead within 21 months.</p>
+        </article>
 
-      <article class="entry">
-        <div class="entry-head">
-          <div>
+        <article class="entry">
+          <div class="entry-head">
             <h3>Rogue International Venture Capital</h3>
-            <p class="meta">Technology Intern · Remote (Hong Kong)</p>
+            <span class="date">Sep 2023 — Nov 2023</span>
           </div>
-          <p class="date">Sep 2023 — Nov 2023</p>
-        </div>
-        <ul>
-          <li>Built an LSTM stock-price forecaster.</li>
-        </ul>
-      </article>
+          <p class="meta">Technology Intern · Remote (Hong Kong)</p>
+          <ul>
+            <li>Built an LSTM stock-price forecaster.</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
     <!-- Projects -->
@@ -139,28 +134,28 @@
       <div class="cards">
         <article class="card">
           <h3><a href="https://github.com/NyAI-SIH-2023/ML-Model" target="_blank" rel="noopener">Legal Document Summarizer</a></h3>
-          <p class="tagline">Smart India Hackathon ’23 winning project</p>
+          <p class="tagline">Smart India Hackathon ’23 winner</p>
           <p>Fine-tuned BART for legal summarization, served via FastAPI.</p>
-          <p class="tags"><span>PyTorch</span><span>Transformers</span><span>NLTK</span><span>FastAPI</span></p>
+          <p class="tags"><span>PyTorch</span><span>Transformers</span><span>FastAPI</span></p>
         </article>
 
         <article class="card">
-          <h3><a href="https://github.com/al0nkr/cnn-unfair-means-detection" target="_blank" rel="noopener">Examination Hall Malpractice Detection</a></h3>
+          <h3><a href="https://github.com/al0nkr/cnn-unfair-means-detection" target="_blank" rel="noopener">Exam Hall Malpractice Detection</a></h3>
           <p class="tagline">B.Tech minor project</p>
           <p>Real-time YOLO detection over RTSP streams.</p>
-          <p class="tags"><span>PyTorch</span><span>TorchVision</span><span>YOLO</span></p>
+          <p class="tags"><span>PyTorch</span><span>YOLO</span></p>
         </article>
 
         <article class="card">
-          <h3><a href="https://github.com/al0nkr/visual-search-rag" target="_blank" rel="noopener">Visual Search RAG Pipeline</a></h3>
+          <h3><a href="https://github.com/al0nkr/visual-search-rag" target="_blank" rel="noopener">Visual Search RAG</a></h3>
           <p class="tagline">Visual document search</p>
           <p>OCR + Vision-LLM retrieval, served with vLLM.</p>
-          <p class="tags"><span>Python</span><span>OCR</span><span>Vision-LLM</span><span>vLLM</span></p>
+          <p class="tags"><span>OCR</span><span>Vision-LLM</span><span>vLLM</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/catalog-indexing-engine" target="_blank" rel="noopener">Catalog Indexing Engine</a></h3>
-          <p class="tagline">High-throughput indexing in Go</p>
+          <p class="tagline">High-throughput indexing</p>
           <p>Catalog-scale lookup and ingestion.</p>
           <p class="tags"><span>Go</span></p>
         </article>
@@ -174,74 +169,81 @@
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/car-recommender-system" target="_blank" rel="noopener">Car Recommender System</a></h3>
-          <p class="tagline">Visual similarity with deep learning</p>
+          <p class="tagline">Deep learning</p>
           <p>Recommendations by visual similarity.</p>
           <p class="tags"><span>PyTorch</span><span>Computer Vision</span></p>
         </article>
       </div>
 
-      <h3 class="subhead">All repositories</h3>
-      <p class="section-intro small">Live from <a href="https://github.com/al0nkr?tab=repositories" target="_blank" rel="noopener">GitHub</a>.</p>
-      <div id="repo-grid" class="repo-grid" aria-live="polite">
-        <p class="muted">Loading repositories…</p>
-      </div>
-      <noscript><p>Enable JavaScript to load the full repo list, or browse <a href="https://github.com/al0nkr?tab=repositories">all repositories on GitHub</a>.</p></noscript>
+      <details class="repos">
+        <summary class="btn-ghost">All repositories</summary>
+        <div id="repo-grid" class="repo-grid" aria-live="polite">
+          <p class="muted">Loading repositories…</p>
+        </div>
+      </details>
+      <noscript><p class="muted">Browse <a href="https://github.com/al0nkr?tab=repositories">all repositories on GitHub</a>.</p></noscript>
     </section>
 
     <!-- Awards -->
     <section id="awards">
       <h2>Achievements</h2>
-      <article class="entry">
-        <div class="entry-head">
-          <div><h3>Smart India Hackathon 2023 — Winner, 1st position</h3>
-          <p class="meta">Legal Documentation Assistant · led a 6-member team</p></div>
-          <p class="date">Dec 2023</p>
-        </div>
-      </article>
-      <article class="entry">
-        <div class="entry-head">
-          <div><h3>Global Development Public Policy Youth Innovation Contest — Level II sponsorship</h3>
-          <p class="meta">IoT hydroponics for SDG1 &amp; SDG2 · Beijing &amp; Xi’an, China</p></div>
-          <p class="date">Jul 2025</p>
-        </div>
-      </article>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Smart India Hackathon 2023 — Winner</h3>
+            <span class="date">Dec 2023</span>
+          </div>
+          <p class="meta">Legal Documentation Assistant · led a 6-member team</p>
+        </article>
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Global Development Youth Innovation Contest — Level II</h3>
+            <span class="date">Jul 2025</span>
+          </div>
+          <p class="meta">IoT hydroponics for SDG1 &amp; SDG2 · Beijing &amp; Xi’an, China</p>
+        </article>
+      </div>
     </section>
 
     <!-- Education -->
     <section id="education">
       <h2>Education</h2>
-      <article class="entry">
-        <div class="entry-head">
-          <div><h3>Maharaja Surajmal Institute of Technology</h3>
-          <p class="meta">B.Tech ECE · Minor in ML &amp; Data Analytics · GPA 8.6/10</p></div>
-          <p class="date">Dec 2021 — Jun 2025</p>
-        </div>
-        <p><strong>Coursework:</strong> Machine Learning, Deep Learning, Pattern Recognition, Statistics, DSP.</p>
-      </article>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Maharaja Surajmal Institute of Technology</h3>
+            <span class="date">Dec 2021 — Jun 2025</span>
+          </div>
+          <p class="meta">B.Tech ECE · Minor in ML &amp; Data Analytics · GPA 8.6/10</p>
+        </article>
+      </div>
     </section>
 
     <!-- Skills -->
     <section id="skills">
-      <h2>Technical skills</h2>
-      <ul class="skills">
-        <li><strong>Languages:</strong> C/C++, Python, Go, SQL, MATLAB</li>
-        <li><strong>AI &amp; Computer Vision:</strong> PyTorch, TorchVision, Transformers, YOLO, NLTK</li>
-        <li><strong>Inference &amp; Deployment:</strong> NVIDIA DeepStream, vLLM, FastAPI, Docker, Git</li>
-      </ul>
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Languages</dt><dd>C/C++, Python, Go, SQL</dd>
+        <dt>AI &amp; Vision</dt><dd>PyTorch, Transformers, YOLO, TorchVision</dd>
+        <dt>Deployment</dt><dd>DeepStream, vLLM, FastAPI, Docker</dd>
+      </dl>
     </section>
 
     <!-- Contact -->
     <section id="contact">
       <h2>Contact</h2>
-      <p><a class="btn" href="mailto:alankardutta@gmail.com">alankardutta@gmail.com</a></p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:alankardutta@gmail.com">Email me</a>
+        <a class="btn-ghost" href="https://www.linkedin.com/in/alankar-dutta/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year">2026</span> Alankar Dutta · <a href="https://github.com/al0nkr">github.com/al0nkr</a> · Hosted on GitHub Pages</p>
+    <p>© <span id="year">2026</span> Alankar Dutta · <a href="https://github.com/al0nkr">github.com/al0nkr</a></p>
   </footer>
 
-  <button id="to-top" type="button" hidden aria-label="Back to top">↑</button>
+  <button id="to-top" class="icon-btn" type="button" hidden aria-label="Back to top">↑</button>
   <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
 
   <script src="script.js" defer></script>
