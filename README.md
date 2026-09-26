@@ -24,6 +24,7 @@ python3 -m http.server 8000
 - Edit `index.html` sections directly (Experience, Projects, Awards).
 - Project grid auto-loads from `https://api.github.com/users/al0nkr/repos` via `script.js`; curated 6 cards are static.
 - Avatar: `https://avatars.githubusercontent.com/u/129394458?v=4` (GitHub avatar, no local image).
+- After editing `styles.css`, `script.js` or `fonts.js`, run `python3 tools/bust.py` before committing. It stamps the links in the HTML with a content hash so visitors get the new files right away (GitHub Pages lets browsers cache them for 10 minutes).
 - Fonts: add one entry to `SITE_FONTS` in `fonts.js` (label, CSS stack, Google Fonts URL, optional size `scale`); it appears in the nav picker automatically. Default is Rubik.
 - Themes: color tokens live at the top of `styles.css` (dark `#050e1c` default, cream `#fff0db` light via `data-theme="light"`).
 - Photo reel (the "press △ to rest at grace" section under Contact): drop new phone photos into `photos/` and run
