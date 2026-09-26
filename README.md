@@ -31,5 +31,5 @@ python3 -m http.server 8000
   python3 tools/photos.py
   ```
   It uploads the untouched originals to the `photos` GitHub Release (never committed; `photos/*` is git-ignored), writes 1280px and 2560px display copies (JPEG q90, no chroma subsampling) to `photos/display/`, and adds entries to `photos/photos.json`. Then fill in `place` / `caption` there and commit `photos/photos.json` + `photos/display/`.
-  The carousel shows the display copies; clicking a photo opens the 2560px copy and swaps in the original (click again to zoom 1:1, drag to pan). Browsers that refuse Release files keep the 2560px copy and offer "Download original".
+  The carousel shows the display copies; clicking a photo opens it instantly and sharpens to the 2560px copy. The original is only fetched when the viewer clicks the photo (or "View full resolution"); after that, click zooms 1:1 and drag pans. Browsers that refuse Release files keep the 2560px copy and offer "Download original".
 - Contact: email only, no phone/resume per owner request. No private company metrics included.

@@ -281,11 +281,12 @@
   <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
     <figure>
       <div class="lightbox-stage" id="lightbox-stage"><img id="lightbox-img" alt="" /></div>
+      <span class="lightbox-loading" id="lightbox-loading" hidden><span class="spinner" aria-hidden="true"></span>Loading full resolution…</span>
       <figcaption>
         <span class="place" id="lightbox-place"></span>
         <span id="lightbox-caption"></span>
-        <span class="lightbox-meta">
-          <span class="muted" id="lightbox-res" aria-live="polite"></span>
+        <span class="lightbox-meta" aria-live="polite">
+          <button type="button" class="linklike" id="lightbox-hires">View full resolution</button>
           <a id="lightbox-original" href="#" target="_blank" rel="noopener">Download original</a>
         </span>
       </figcaption>

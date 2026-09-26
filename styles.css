@@ -404,7 +404,7 @@ h4 { font-size: 1rem; font-weight: 500; }
   overflow: visible;
 }
 .lightbox::backdrop { background: rgb(2 6 14 / 0.85); backdrop-filter: blur(4px); }
-.lightbox figure { margin: 0; }
+.lightbox figure { margin: 0; position: relative; }
 .lightbox-stage {
   overflow: hidden;
   background: #000;
@@ -412,7 +412,33 @@ h4 { font-size: 1rem; font-weight: 500; }
   overscroll-behavior: contain;
 }
 .lightbox-stage img { display: block; max-width: none; height: auto; user-select: none; -webkit-user-drag: none; }
-.lightbox-stage.can-zoom img { cursor: zoom-in; }
+.lightbox-stage.can-zoom img, .lightbox-stage.wants-full img { cursor: zoom-in; }
+.lightbox-loading {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.65);
+  color: #fff;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+.lightbox-loading[hidden] { display: none; }
+.spinner {
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid rgb(255 255 255 / 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.linklike { padding: 0; border: 0; background: none; font: inherit; color: var(--accent); text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+.linklike:disabled { color: var(--muted); text-decoration: none; cursor: default; }
 .lightbox-stage.zoomed { overflow: auto; cursor: grab; touch-action: pan-x pan-y; }
 .lightbox-stage.zoomed img { cursor: zoom-out; }
 .lightbox-stage.zoomed:active { cursor: grabbing; }

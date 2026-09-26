@@ -422,17 +422,19 @@
     });
   }
 
-  // Lightbox: shows the 2560px copy at once, then swaps in the untouched original
-  // (served from the GitHub Release). Click the photo to zoom to 1:1 and drag to pan.
-  // Firefox refuses Release files (served as downloads), so it stays on the copy.
+  // Lightbox: opens instantly on the carousel's (cached) copy, sharpens to the 2560px copy,
+  // and only fetches the untouched original (GitHub Release, 1-6 MB) when the viewer asks:
+  // first click on the photo or "View full resolution". After that, click zooms to 1:1
+  // and drag pans. Browsers that refuse Release files keep the 2560px copy.
   var lbImg = document.getElementById("lightbox-img");
   var stage = document.getElementById("lightbox-stage");
-  var resLabel = document.getElementById("lightbox-res");
+  var hiresBtn = document.getElementById("lightbox-hires");
+  var loadingBadge = document.getElementById("lightbox-loading");
   var originalLink = document.getElementById("lightbox-original");
   var zoomed = false;
-  var fullLoaded = {};
+  var fullState = {}; // index -> "loading" | "loaded" | "failed"
 
-  // The frame is sized from the photo's real dimensions, so swapping preview -> original
+  // The frame is sized from the photo's real dimensions, so swapping copy -> original
   // never changes its size.
   function frameSize() {
     var p = photos[current];
@@ -443,12 +445,18 @@
     return { w: Math.round(w * scale), h: Math.round(h * scale) };
   }
 
+  // Zooming is offered once the original is showing (or can't be had).
+  function zoomAllowed() {
+    var st = fullState[current];
+    return !photos[current].full || st === "loaded" || st === "failed";
+  }
+
   function layoutLightbox(focus) {
     if (!lbImg.naturalWidth) return;
     var f = frameSize();
     stage.style.width = f.w + "px";
     stage.style.height = f.h + "px";
-    var canZoom = lbImg.naturalWidth > f.w * 1.1;
+    var canZoom = zoomAllowed() && lbImg.naturalWidth > f.w * 1.1;
     stage.classList.toggle("can-zoom", canZoom);
     if (!canZoom) zoomed = false;
     stage.classList.toggle("zoomed", zoomed);
@@ -459,19 +467,60 @@
     }
   }
 
-  // Point of the photo (0..1) currently at the centre of the frame.
-  function viewCentre() {
-    var w = lbImg.offsetWidth || 1, h = lbImg.offsetHeight || 1;
-    return { x: (stage.scrollLeft + stage.clientWidth / 2) / w, y: (stage.scrollTop + stage.clientHeight / 2) / h };
+  function showSrc(src) {
+    lbImg.onload = function () { layoutLightbox(); };
+    lbImg.src = src;
+    if (lbImg.complete && lbImg.naturalWidth) layoutLightbox();
+  }
+
+  function syncHiresUI() {
+    var p = photos[current], st = fullState[current];
+    hiresBtn.hidden = !p.full;
+    hiresBtn.disabled = !!st;
+    hiresBtn.textContent =
+      st === "loading" ? "Loading full resolution…" :
+      st === "loaded" ? "Full resolution" :
+      st === "failed" ? "Full resolution unavailable here" : "View full resolution";
+    loadingBadge.hidden = st !== "loading";
+    stage.classList.toggle("wants-full", !!p.full && !st);
+    layoutLightbox();
+  }
+
+  function loadFull() {
+    var i = current, p = photos[i];
+    if (!p.full || fullState[i]) return;
+    fullState[i] = "loading";
+    syncHiresUI();
+    var hi = new Image();
+    hi.onload = function () {
+      fullState[i] = "loaded";
+      if (current !== i || !lightbox.open) return;
+      showSrc(p.full);
+      syncHiresUI();
+    };
+    hi.onerror = function () {
+      fullState[i] = "failed";
+      if (current === i) syncHiresUI();
+    };
+    hi.src = p.full;
   }
 
   function showInLightbox(i) {
     var p = photos[i];
     current = i;
     zoomed = false;
-    lbImg.onload = function () { layoutLightbox(); };
-    lbImg.src = fullLoaded[i] ? p.full : (p.large || p.src);
-    if (lbImg.complete) layoutLightbox();
+    if (fullState[i] === "loaded") {
+      showSrc(p.full);
+    } else {
+      showSrc(p.src); // already downloaded by the carousel: opens instantly
+      if (p.large && p.large !== p.src) {
+        var big = new Image();
+        big.onload = function () {
+          if (current === i && fullState[i] !== "loaded") showSrc(p.large);
+        };
+        big.src = p.large;
+      }
+    }
     lbImg.alt = p.alt || p.caption || p.place || "";
     var place = document.getElementById("lightbox-place");
     place.textContent = p.place || "";
@@ -482,25 +531,7 @@
     var single = photos.length < 2;
     document.getElementById("lightbox-prev").hidden = single;
     document.getElementById("lightbox-next").hidden = single;
-
-    if (!p.full || fullLoaded[i]) {
-      resLabel.textContent = p.full ? "Full resolution" : "";
-      return;
-    }
-    resLabel.textContent = "Loading full resolution…";
-    var hi = new Image();
-    hi.onload = function () {
-      fullLoaded[i] = true;
-      if (current !== i || !lightbox.open) return;
-      var focus = zoomed ? viewCentre() : null;
-      lbImg.onload = function () { layoutLightbox(focus); };
-      lbImg.src = p.full;
-      resLabel.textContent = "Full resolution";
-    };
-    hi.onerror = function () {
-      if (current === i) resLabel.textContent = "High-res preview";
-    };
-    hi.src = p.full;
+    syncHiresUI();
   }
 
   function openLightbox(i) {
@@ -525,7 +556,7 @@
     lightbox.addEventListener("close", function () { goTo(current); });
     window.addEventListener("resize", function () { if (lightbox.open) layoutLightbox(zoomed ? viewCentre() : null); });
 
-    // Click to zoom to 1:1 at the clicked point; drag to pan while zoomed.
+    // Click loads the original; after that, click zooms to 1:1 at that point and drag pans.
     var drag = null;
     lbImg.draggable = false; // Firefox otherwise starts a native image drag
     stage.addEventListener("pointerdown", function (e) {
@@ -542,8 +573,11 @@
       stage.scrollTop = drag.top - dy;
     });
     stage.addEventListener("pointerup", function () { setTimeout(function () { drag = null; }, 0); });
-    lbImg.addEventListener("click", function (e) {
+    hiresBtn.addEventListener("click", loadFull);
+    // Listen on the stage: while zoomed it holds pointer capture, so clicks target it.
+    stage.addEventListener("click", function (e) {
       if (drag && drag.moved) return;
+      if (photos[current].full && !fullState[current]) return loadFull(); // first click: fetch the original
       if (!stage.classList.contains("can-zoom")) return;
       var r = lbImg.getBoundingClientRect();
       var focus = { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
