@@ -203,6 +203,35 @@ h4 { font-size: 1rem; font-weight: 500; }
 .note { margin-top: 1rem; font-style: italic; }
 .meta + .note { margin-top: 0.3rem; }
 
+/* Relevant coursework: a muted line that opens into course chips */
+.coursework { margin-top: 0.6rem; }
+.coursework summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+.coursework summary::-webkit-details-marker { display: none; }
+.coursework summary::after {
+  content: "";
+  width: 0.38rem;
+  height: 0.38rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform 0.2s;
+}
+.coursework[open] summary::after { transform: translateY(15%) rotate(-135deg); }
+.coursework summary:hover, .coursework[open] summary { color: var(--fg); }
+.course-list { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.entry .course-list { padding-left: 0; margin-top: 0.6rem; }
+.course-list li { margin: 0; padding: 0.2rem 0.7rem; border-radius: 999px; background: var(--chip); color: var(--muted); font-size: 0.8rem; }
+
 /* ---------- Projects ---------- */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
 .card {
