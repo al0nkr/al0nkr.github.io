@@ -70,27 +70,78 @@
     });
   }
 
-  // Active section highlight
+  // Active section highlight. Scroll-position based so short sections at the end of the
+  // page (which can never reach the middle of the viewport) still get highlighted.
+  // A clicked link stays active until the user scrolls away from where it landed.
   var links = navLinks ? Array.prototype.slice.call(navLinks.querySelectorAll('a[href^="#"]')) : [];
   var sections = links
     .map(function (a) { return document.querySelector(a.getAttribute("href")); })
     .filter(Boolean);
-  if ("IntersectionObserver" in window && sections.length) {
-    var map = new Map();
-    links.forEach(function (a) { map.set(a.getAttribute("href"), a); });
-    var obs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            links.forEach(function (a) { a.classList.remove("active"); });
-            var link = map.get("#" + en.target.id);
-            if (link) link.classList.add("active");
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-    );
-    sections.forEach(function (s) { obs.observe(s); });
+  if (sections.length) {
+    var locked = null;   // href of a clicked link
+    var lockY = null;    // scroll position where the click-scroll settled
+    var settleTimer = null;
+    var ticking = false;
+
+    var setActive = function (href) {
+      links.forEach(function (a) {
+        var on = a.getAttribute("href") === href;
+        a.classList.toggle("active", on);
+        if (on) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    };
+
+    var fromScroll = function () {
+      var doc = document.documentElement;
+      if (window.scrollY + window.innerHeight >= doc.scrollHeight - 2) {
+        return "#" + sections[sections.length - 1].id;
+      }
+      var threshold = Math.min(window.innerHeight * 0.35, 280);
+      var current = null;
+      sections.forEach(function (sec) {
+        if (sec.getBoundingClientRect().top <= threshold) current = "#" + sec.id;
+      });
+      return current;
+    };
+
+    var update = function () {
+      ticking = false;
+      if (locked) {
+        if (lockY === null || Math.abs(window.scrollY - lockY) < 40) return setActive(locked);
+        locked = lockY = null;
+      }
+      setActive(fromScroll());
+    };
+
+    var settle = function (delay) {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function () { lockY = window.scrollY; }, delay);
+    };
+
+    var lockTo = function (href) {
+      locked = href;
+      lockY = null;
+      setActive(href);
+      settle(300); // covers clicks that don't scroll (already at target)
+    };
+
+    links.forEach(function (a) {
+      a.addEventListener("click", function () { lockTo(a.getAttribute("href")); });
+    });
+
+    window.addEventListener("scroll", function () {
+      // While a click-scroll is in flight, record where it settles.
+      if (locked && lockY === null) return settle(150);
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener("resize", update);
+
+    if (location.hash && links.some(function (a) { return a.getAttribute("href") === location.hash; })) {
+      lockTo(location.hash);
+    } else {
+      update();
+    }
   }
 
   // Back to top
