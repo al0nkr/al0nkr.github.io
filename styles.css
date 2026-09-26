@@ -188,8 +188,9 @@ h4 { font-size: 1rem; font-weight: 500; }
 .date { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 /* ---------- Hero ---------- */
-.hero { display: flex; gap: 2rem; align-items: center; margin-top: 0; }
-.avatar { width: 112px; height: 112px; border-radius: 22%; border: 1px solid var(--line); flex-shrink: 0; }
+/* Desktop: a large avatar centred on the text block, so the space above and below it matches. */
+.hero { display: flex; gap: 2.25rem; align-items: center; margin-top: 0; }
+.avatar { width: var(--avatar-size, 208px); height: var(--avatar-size, 208px); border-radius: 22%; border: 1px solid var(--line); flex-shrink: 0; }
 /* Avatar: night crop in dark mode, day crop in light mode. As a CSS background
    only the active theme's image is downloaded, and it swaps with the toggle. */
 .photo-avatar { background: #0b1b3a url("avatar.jpg?v=87cab4d5") center / cover no-repeat; }
@@ -580,8 +581,11 @@ h4 { font-size: 1rem; font-weight: 500; }
 @media (max-width: 560px) {
   .container { padding-top: 2rem; }
   section { margin-top: 3rem; }
-  .hero { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
-  .avatar { width: 84px; height: 84px; }
+  /* Phone: everything in the intro sits on one centre line. */
+  .hero { flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; }
+  .avatar { --avatar-size: 136px; }
+  .hero-text p:not(.subtitle) { margin-inline: auto; }
+  .hero .cta-row { justify-content: center; }
   .nav-actions { gap: 0.35rem; }
   h1 { font-size: 2rem; }
   .entry-head, .role { flex-direction: column; gap: 0.1rem; }
