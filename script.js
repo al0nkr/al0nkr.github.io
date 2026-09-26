@@ -16,7 +16,8 @@
     if (themeMeta) themeMeta.setAttribute("content", isLight ? "#fff0db" : "#050e1c");
     if (!themeBtn) return;
     themeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
-    themeBtn.textContent = isLight ? "☾" : "☀";
+    themeBtn.querySelector(".theme-icon").textContent = isLight ? "☾" : "☀";
+    themeBtn.querySelector(".theme-label").textContent = isLight ? "Dark mode" : "Light mode";
     themeBtn.title = isLight ? "Switch to dark mode" : "Switch to light mode";
   }
   syncThemeBtn();
@@ -31,42 +32,65 @@
   }
 
   // Font picker: options come from SITE_FONTS in fonts.js; swaps live via --font.
+  // The closed select always reads "Select font"; the active font is ticked in the list.
   var fontSelect = document.getElementById("font-select");
   if (fontSelect && window.SITE_FONTS && window.applySiteFont) {
+    var placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select font";
+    placeholder.disabled = true;
+    fontSelect.appendChild(placeholder);
     Object.keys(window.SITE_FONTS).forEach(function (id) {
       var opt = document.createElement("option");
       opt.value = id;
-      opt.textContent = window.SITE_FONTS[id].label;
       fontSelect.appendChild(opt);
     });
-    fontSelect.value = root.getAttribute("data-font") || window.SITE_FONT_DEFAULT;
+    var syncFontSelect = function () {
+      var currentFont = root.getAttribute("data-font") || window.SITE_FONT_DEFAULT;
+      Array.prototype.forEach.call(fontSelect.options, function (opt) {
+        if (!opt.value) return;
+        opt.textContent = (opt.value === currentFont ? "✓ " : "") + window.SITE_FONTS[opt.value].label;
+      });
+      fontSelect.selectedIndex = 0;
+      fontSelect.setAttribute("aria-label", "Select font, current: " + window.SITE_FONTS[currentFont].label);
+    };
+    syncFontSelect();
     fontSelect.addEventListener("change", function () {
-      window.applySiteFont(fontSelect.value, true);
+      if (fontSelect.value) window.applySiteFont(fontSelect.value, true);
+      syncFontSelect();
     });
   } else if (fontSelect) {
     fontSelect.hidden = true;
   }
 
-  // Mobile nav
+  // Phone/tablet menu: the bar collapses to a floating ☰; opening it shows the links,
+  // font picker and theme toggle in one panel.
   var navToggle = document.getElementById("nav-toggle");
   var navLinks = document.getElementById("nav-links");
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", function () {
-      var open = navLinks.classList.toggle("open");
+  var header = document.querySelector(".site-header");
+  if (navToggle && navLinks && header) {
+    var setMenu = function (open) {
+      header.classList.toggle("menu-open", open);
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+      navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      navToggle.textContent = open ? "✕" : "☰";
+    };
+    var isOpen = function () { return header.classList.contains("menu-open"); };
+    navToggle.addEventListener("click", function () { setMenu(!isOpen()); });
     navLinks.addEventListener("click", function (e) {
-      if (e.target.tagName === "A" && navLinks.classList.contains("open")) {
-        navLinks.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-      }
+      if (e.target.tagName === "A" && isOpen()) setMenu(false);
+    });
+    document.addEventListener("click", function (e) {
+      if (isOpen() && !header.contains(e.target)) setMenu(false);
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && navLinks.classList.contains("open")) {
-        navLinks.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
+      if (e.key === "Escape" && isOpen()) {
+        setMenu(false);
         navToggle.focus();
       }
+    });
+    window.addEventListener("resize", function () {
+      if (isOpen() && window.innerWidth > 860) setMenu(false);
     });
   }
 
