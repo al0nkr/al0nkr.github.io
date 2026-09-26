@@ -1,4 +1,4 @@
-// Portfolio interactions: year, theme, nav, TOC highlight, to-top, copy email, repo grid.
+// Portfolio interactions: year, theme, font picker, nav, TOC highlight, to-top, copy email, repo grid.
 (function () {
   "use strict";
 
@@ -6,40 +6,45 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  // Theme: respect stored choice, else OS preference via CSS. Toggle sets data-theme.
+  // Theme: dark by default; light (cream) via data-theme="light". fonts.js applies the stored choice early.
   var root = document.documentElement;
   var themeBtn = document.getElementById("theme-toggle");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
   var STORE_KEY = "al0nkr-theme";
-  try {
-    var stored = localStorage.getItem(STORE_KEY);
-    if (stored === "dark" || stored === "light") root.setAttribute("data-theme", stored);
-  } catch (e) { /* private mode */ }
   function syncThemeBtn() {
+    var isLight = root.getAttribute("data-theme") === "light";
+    if (themeMeta) themeMeta.setAttribute("content", isLight ? "#f6f0e1" : "#050e1c");
     if (!themeBtn) return;
-    var isDark =
-      root.getAttribute("data-theme") === "dark" ||
-      (!root.getAttribute("data-theme") &&
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    themeBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
-    themeBtn.textContent = isDark ? "◑" : "◐";
+    themeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
+    themeBtn.textContent = isLight ? "☾" : "☀";
+    themeBtn.title = isLight ? "Switch to dark mode" : "Switch to light mode";
   }
   syncThemeBtn();
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {
-      var current = root.getAttribute("data-theme");
-      var prefersDark =
-        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var next;
-      if (current) {
-        next = current === "dark" ? "light" : "dark";
-      } else {
-        next = prefersDark ? "light" : "dark";
-      }
-      root.setAttribute("data-theme", next);
+      var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      if (next === "light") root.setAttribute("data-theme", "light");
+      else root.removeAttribute("data-theme");
       try { localStorage.setItem(STORE_KEY, next); } catch (e) { /* ignore */ }
       syncThemeBtn();
     });
+  }
+
+  // Font picker: options come from SITE_FONTS in fonts.js; swaps live via --font.
+  var fontSelect = document.getElementById("font-select");
+  if (fontSelect && window.SITE_FONTS && window.applySiteFont) {
+    Object.keys(window.SITE_FONTS).forEach(function (id) {
+      var opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = window.SITE_FONTS[id].label;
+      fontSelect.appendChild(opt);
+    });
+    fontSelect.value = root.getAttribute("data-font") || window.SITE_FONT_DEFAULT;
+    fontSelect.addEventListener("change", function () {
+      window.applySiteFont(fontSelect.value, true);
+    });
+  } else if (fontSelect) {
+    fontSelect.hidden = true;
   }
 
   // Mobile nav

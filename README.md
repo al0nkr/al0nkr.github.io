@@ -24,4 +24,6 @@ python3 -m http.server 8000
 - Edit `index.html` sections directly (Experience, Projects, Awards).
 - Project grid auto-loads from `https://api.github.com/users/al0nkr/repos` via `script.js`; curated 6 cards are static.
 - Avatar: `https://avatars.githubusercontent.com/u/129394458?v=4` (GitHub avatar, no local image).
+- Fonts: add one entry to `SITE_FONTS` in `fonts.js` (label, CSS stack, Google Fonts URL); it appears in the nav picker automatically. Default is Rubik.
+- Themes: color tokens live at the top of `styles.css` (dark `#050e1c` default, cream light via `data-theme="light"`).
 - Contact: email only, no phone/resume per owner request. No private company metrics included.

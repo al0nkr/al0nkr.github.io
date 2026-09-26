@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alankar Dutta — Lead ML Engineer</title>
-  <meta name="description" content="Alankar Dutta (al0nkr) — Lead ML Engineer at Invigilo Technologies. Real-time computer vision, efficient inference, vision-language detection. MSIT B.Tech ECE 2025." />
+  <meta name="description" content="Alankar Dutta (al0nkr), Lead ML Engineer at Invigilo Technologies. Real-time computer vision and efficient inference." />
   <meta property="og:title" content="Alankar Dutta — Lead ML Engineer" />
   <meta property="og:description" content="Real-time computer vision for construction safety. Projects, experience, awards." />
   <meta property="og:type" content="website" />
@@ -15,12 +15,14 @@
   <meta name="twitter:description" content="Real-time computer vision for construction safety. Projects, experience, awards." />
   <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/129394458?v=4" />
   <link rel="canonical" href="https://al0nkr.github.io/" />
-  <meta name="theme-color" content="#fffdf8" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#050e1c" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="manifest" href="site.webmanifest" />
   <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin />
   <link rel="dns-prefetch" href="https://api.github.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="fonts.js"></script>
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
   {
@@ -46,7 +48,9 @@
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top">Alankar Dutta</a>
       <div class="nav-actions">
-        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+        <label class="sr-only" for="font-select">Font</label>
+        <select id="font-select" title="Font"></select>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle light mode" title="Switch to light mode">☀</button>
         <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">Menu</button>
       </div>
       <div class="nav-links" id="nav-links">
@@ -67,16 +71,10 @@
       <img class="avatar" src="https://avatars.githubusercontent.com/u/129394458?v=4" alt="GitHub avatar of Alankar Dutta" width="128" height="128" fetchpriority="high" decoding="async" onerror="this.style.display='none'" />
       <div>
         <h1 id="intro-heading">Alankar Dutta</h1>
-        <p class="subtitle">Lead ML Engineer, Invigilo Technologies · Real-time computer vision</p>
+        <p class="subtitle">Lead ML Engineer, Invigilo Technologies</p>
         <p>
-          I lead applied ML for construction-safety video analytics — real-time detection,
-          multi-object tracking and re-identification, and vision-language detection,
-          deployed as efficient multi-stream inference services.
-          B.Tech ECE (Minor in ML &amp; Data Analytics), MSIT, 2025.
-        </p>
-        <p class="interests">
-          <strong>Interests:</strong> real-time tracking &amp; ReID, open-vocabulary detection,
-          efficient inference for edge deployment, retrieval over visual documents.
+          Real-time computer vision for construction safety: detection, tracking &amp; ReID,
+          vision-language models, efficient inference.
         </p>
         <div class="cta-row">
           <a class="btn" href="mailto:alankardutta@gmail.com">alankardutta@gmail.com</a>
@@ -96,30 +94,27 @@
         <div class="entry-head">
           <div>
             <h3>Invigilo Technologies</h3>
-            <p class="meta">Real-time computer vision for construction safety · Remote (Singapore)</p>
+            <p class="meta">Remote (Singapore)</p>
           </div>
           <p class="date">Apr 2024 — Present</p>
         </div>
 
         <h4>Lead ML Engineer <span class="date-inline">— Present</span></h4>
         <ul>
-          <li>Lead a 6-engineer ML team, owning weekly AI feature delivery from client scoping to production.</li>
-          <li>Architect real-time C++/Python violation-detection pipelines for occlusion-heavy scenes.</li>
-          <li>Design GPU inference services with VRAM-aware scheduling; instituted code review + unit/integration test gates.</li>
+          <li>Lead a 6-engineer ML team shipping weekly AI features to production.</li>
+          <li>Architect real-time C++/Python detection pipelines and GPU inference services.</li>
         </ul>
 
         <h4>ML Engineer <span class="date-inline">Jul 2025 — Dec 2025</span></h4>
         <ul>
-          <li>Owned production inference pipelines for enterprise accounts.</li>
-          <li>Built a Vision-LLM server for text-prompted open-vocabulary detection.</li>
-          <li>Integrated and benchmarked person re-identification in the C++ SDK for long-term tracking.</li>
+          <li>Built a Vision-LLM server for open-vocabulary detection.</li>
+          <li>Integrated person re-identification into the C++ SDK.</li>
         </ul>
 
         <h4>ML Engineering Intern <span class="date-inline">Apr 2024 — Jul 2025</span></h4>
         <ul>
-          <li>Engineered a PyTorch/FastAPI face-recognition service over a large identity gallery.</li>
-          <li>Rewrote multi-stream inference hot paths in C++; optimized detection algorithms for safety video analytics.</li>
-          <li>Containerized pipelines with Docker and CI/CD practices.</li>
+          <li>Built a PyTorch/FastAPI face-recognition service.</li>
+          <li>Rewrote multi-stream inference hot paths in C++.</li>
         </ul>
         <p class="note">Promoted intern → engineer → lead within 21 months.</p>
       </article>
@@ -133,7 +128,7 @@
           <p class="date">Sep 2023 — Nov 2023</p>
         </div>
         <ul>
-          <li>Built an LSTM closing-price forecaster on Yahoo Finance data for research prototyping.</li>
+          <li>Built an LSTM stock-price forecaster.</li>
         </ul>
       </article>
     </section>
@@ -141,54 +136,52 @@
     <!-- Projects -->
     <section id="projects">
       <h2>Projects</h2>
-      <p class="section-intro">Selected work. Full list auto-loads from GitHub below.</p>
-
       <div class="cards">
         <article class="card">
           <h3><a href="https://github.com/NyAI-SIH-2023/ML-Model" target="_blank" rel="noopener">Legal Document Summarizer</a></h3>
           <p class="tagline">Smart India Hackathon ’23 winning project</p>
-          <p>Fine-tuned BART on legal corpora for abstractive summarization; served behind FastAPI for real-time document processing.</p>
+          <p>Fine-tuned BART for legal summarization, served via FastAPI.</p>
           <p class="tags"><span>PyTorch</span><span>Transformers</span><span>NLTK</span><span>FastAPI</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/cnn-unfair-means-detection" target="_blank" rel="noopener">Examination Hall Malpractice Detection</a></h3>
           <p class="tagline">B.Tech minor project</p>
-          <p>Real-time malpractice detection pipeline on 2,800+ annotated images with YOLO variants; RTSP ingestion with alert logging.</p>
+          <p>Real-time YOLO detection over RTSP streams.</p>
           <p class="tags"><span>PyTorch</span><span>TorchVision</span><span>YOLO</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/visual-search-rag" target="_blank" rel="noopener">Visual Search RAG Pipeline</a></h3>
-          <p class="tagline">Document search over local + web sources</p>
-          <p>End-to-end retrieval answering document-search queries via OCR and translation models, served with vLLM for memory-efficient inference.</p>
+          <p class="tagline">Visual document search</p>
+          <p>OCR + Vision-LLM retrieval, served with vLLM.</p>
           <p class="tags"><span>Python</span><span>OCR</span><span>Vision-LLM</span><span>vLLM</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/catalog-indexing-engine" target="_blank" rel="noopener">Catalog Indexing Engine</a></h3>
           <p class="tagline">High-throughput indexing in Go</p>
-          <p>Indexing engine experiment in Go for catalog-scale lookup and ingestion.</p>
+          <p>Catalog-scale lookup and ingestion.</p>
           <p class="tags"><span>Go</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/ats-resume-generator" target="_blank" rel="noopener">ATS Resume Generator</a></h3>
           <p class="tagline">Resume tooling</p>
-          <p>Python tooling to generate ATS-parsable resumes from structured input.</p>
+          <p>ATS-parsable resumes from structured input.</p>
           <p class="tags"><span>Python</span></p>
         </article>
 
         <article class="card">
           <h3><a href="https://github.com/al0nkr/car-recommender-system" target="_blank" rel="noopener">Car Recommender System</a></h3>
           <p class="tagline">Visual similarity with deep learning</p>
-          <p>Recommendations on the basis of visual similarity; computer-vision experiment with PyTorch neural networks.</p>
+          <p>Recommendations by visual similarity.</p>
           <p class="tags"><span>PyTorch</span><span>Computer Vision</span></p>
         </article>
       </div>
 
       <h3 class="subhead">All repositories</h3>
-      <p class="section-intro small">Loaded live from <a href="https://github.com/al0nkr?tab=repositories" target="_blank" rel="noopener">github.com/al0nkr</a>.</p>
+      <p class="section-intro small">Live from <a href="https://github.com/al0nkr?tab=repositories" target="_blank" rel="noopener">GitHub</a>.</p>
       <div id="repo-grid" class="repo-grid" aria-live="polite">
         <p class="muted">Loading repositories…</p>
       </div>
@@ -201,22 +194,16 @@
       <article class="entry">
         <div class="entry-head">
           <div><h3>Smart India Hackathon 2023 — Winner, 1st position</h3>
-          <p class="meta">Legal Documentation Assistant · Techno Main Salt Lake, Kolkata</p></div>
+          <p class="meta">Legal Documentation Assistant · led a 6-member team</p></div>
           <p class="date">Dec 2023</p>
         </div>
-        <ul>
-          <li>National-level hackathon; led a 6-member cross-domain team, shipped in 36 hours.</li>
-        </ul>
       </article>
       <article class="entry">
         <div class="entry-head">
           <div><h3>Global Development Public Policy Youth Innovation Contest — Level II sponsorship</h3>
-          <p class="meta">IoT-enabled hydroponics addressing SDG1 &amp; SDG2 · Beijing &amp; Xi’an, China (with UN collaboration)</p></div>
+          <p class="meta">IoT hydroponics for SDG1 &amp; SDG2 · Beijing &amp; Xi’an, China</p></div>
           <p class="date">Jul 2025</p>
         </div>
-        <ul>
-          <li>Proposed hydroponics + IoT farming system for rural households; selected for academic/cultural exchange.</li>
-        </ul>
       </article>
     </section>
 
@@ -226,11 +213,10 @@
       <article class="entry">
         <div class="entry-head">
           <div><h3>Maharaja Surajmal Institute of Technology</h3>
-          <p class="meta">B.Tech, Electronics and Communications Engineering · Minor in ML and Data Analytics · New Delhi</p></div>
+          <p class="meta">B.Tech ECE · Minor in ML &amp; Data Analytics · GPA 8.6/10</p></div>
           <p class="date">Dec 2021 — Jun 2025</p>
         </div>
-        <p><strong>GPA:</strong> 8.6/10</p>
-        <p><strong>Coursework:</strong> Machine Learning, AI, Deep Learning, Pattern Recognition, Unsupervised Learning, Statistics in Data Analytics, Computational Methods, Probability &amp; Statistics, Digital Signal Processing, Data Communication and Networks.</p>
+        <p><strong>Coursework:</strong> Machine Learning, Deep Learning, Pattern Recognition, Statistics, DSP.</p>
       </article>
     </section>
 
@@ -247,7 +233,6 @@
     <!-- Contact -->
     <section id="contact">
       <h2>Contact</h2>
-      <p>Best reached by email:</p>
       <p><a class="btn" href="mailto:alankardutta@gmail.com">alankardutta@gmail.com</a></p>
     </section>
   </main>

@@ -4,8 +4,8 @@
   "description": "Real-time computer vision for construction safety. Projects, experience, awards.",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fffdf8",
-  "theme_color": "#1a1a1a",
+  "background_color": "#050e1c",
+  "theme_color": "#050e1c",
   "icons": [
     {
       "src": "favicon.svg",
