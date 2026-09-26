@@ -16,7 +16,6 @@
     if (themeMeta) themeMeta.setAttribute("content", isLight ? "#fff0db" : "#050e1c");
     if (!themeBtn) return;
     themeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
-    themeBtn.querySelector(".theme-icon").textContent = isLight ? "☾" : "☀";
     themeBtn.querySelector(".theme-label").textContent = isLight ? "Dark mode" : "Light mode";
     themeBtn.title = isLight ? "Switch to dark mode" : "Switch to light mode";
   }
