@@ -1,0 +1,17 @@
+{
+  "name": "Alankar Dutta — Lead ML Engineer",
+  "short_name": "Alankar",
+  "description": "Real-time computer vision for construction safety. Projects, experience, awards.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -8,7 +8,19 @@
   <meta property="og:title" content="Alankar Dutta — Lead ML Engineer" />
   <meta property="og:description" content="Real-time computer vision for construction safety. Projects, experience, awards." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://al0nkr.github.io/" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/129394458?v=4" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Alankar Dutta — Lead ML Engineer" />
+  <meta name="twitter:description" content="Real-time computer vision for construction safety. Projects, experience, awards." />
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/129394458?v=4" />
+  <link rel="canonical" href="https://al0nkr.github.io/" />
+  <meta name="theme-color" content="#fffdf8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin />
+  <link rel="dns-prefetch" href="https://api.github.com" />
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
   {
@@ -28,27 +40,33 @@
   }
   </script>
 </head>
-<body>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top">Alankar Dutta</a>
-      <div class="nav-links">
+      <div class="nav-actions">
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+        <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">Menu</button>
+      </div>
+      <div class="nav-links" id="nav-links">
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#awards">Awards</a>
         <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
         <a href="https://github.com/al0nkr" target="_blank" rel="noopener">GitHub</a>
       </div>
     </nav>
   </header>
 
-  <main id="top" class="container">
+  <main id="main" class="container" tabindex="-1">
     <!-- Hero / About -->
-    <section class="hero">
-      <img class="avatar" src="https://avatars.githubusercontent.com/u/129394458?v=4" alt="GitHub avatar of Alankar Dutta" width="128" height="128" />
+    <section class="hero" aria-labelledby="intro-heading">
+      <img class="avatar" src="https://avatars.githubusercontent.com/u/129394458?v=4" alt="GitHub avatar of Alankar Dutta" width="128" height="128" fetchpriority="high" decoding="async" onerror="this.style.display='none'" />
       <div>
-        <h1>Alankar Dutta</h1>
+        <h1 id="intro-heading">Alankar Dutta</h1>
         <p class="subtitle">Lead ML Engineer, Invigilo Technologies · Real-time computer vision</p>
         <p>
           I lead applied ML for construction-safety video analytics — real-time detection,
@@ -62,6 +80,7 @@
         </p>
         <div class="cta-row">
           <a class="btn" href="mailto:alankardutta@gmail.com">alankardutta@gmail.com</a>
+          <button class="btn-ghost" id="copy-email" type="button" data-email="alankardutta@gmail.com" aria-live="polite">Copy email</button>
           <a class="link" href="https://github.com/al0nkr" target="_blank" rel="noopener">github.com/al0nkr</a>
           <span class="sep" aria-hidden="true">·</span>
           <a class="link" href="https://www.linkedin.com/in/alankar-dutta/" target="_blank" rel="noopener">LinkedIn</a>
@@ -234,8 +253,11 @@
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Alankar Dutta · <a href="https://github.com/al0nkr">github.com/al0nkr</a> · Hosted on GitHub Pages</p>
+    <p>© <span id="year">2026</span> Alankar Dutta · <a href="https://github.com/al0nkr">github.com/al0nkr</a> · Hosted on GitHub Pages</p>
   </footer>
+
+  <button id="to-top" type="button" hidden aria-label="Back to top">↑</button>
+  <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
 
   <script src="script.js" defer></script>
 </body>
