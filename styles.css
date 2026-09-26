@@ -189,7 +189,7 @@ h4 { font-size: 1rem; font-weight: 500; }
 
 /* ---------- Hero ---------- */
 .hero { display: flex; gap: 2rem; align-items: center; margin-top: 0; }
-.avatar { width: 112px; height: 112px; border-radius: 50%; border: 1px solid var(--line); flex-shrink: 0; }
+.avatar { width: 112px; height: 112px; border-radius: 22%; border: 1px solid var(--line); flex-shrink: 0; }
 /* Bot-face avatar (same art as the tab icon, generated together); colours follow the site theme. */
 .bot-avatar { display: block; overflow: hidden; }
 .bot-avatar {
