@@ -244,11 +244,46 @@
         <a class="btn-ghost" href="https://www.linkedin.com/in/alankar-dutta/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </section>
+
+    <!-- Reward: photo reel (photos listed in photos/photos.json) -->
+    <section id="reward" class="reward" aria-labelledby="reward-title">
+      <p class="reward-teaser" id="reward-title">You made it all the way down. Here’s your reward.</p>
+      <button id="reward-toggle" class="btn-ghost" type="button" aria-expanded="false" aria-controls="reward-panel">
+        Open the photo reel <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div id="reward-panel" class="reward-panel" inert>
+        <div class="reward-inner">
+          <p class="reward-sub">Photos I took, from places I’ve been.</p>
+          <div class="carousel" id="carousel" hidden>
+            <div class="carousel-track" id="carousel-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Photo reel"></div>
+            <div class="carousel-controls">
+              <button class="icon-btn" id="carousel-prev" type="button" aria-label="Previous photo">←</button>
+              <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Choose photo"></div>
+              <button class="icon-btn" id="carousel-next" type="button" aria-label="Next photo">→</button>
+            </div>
+          </div>
+          <p class="muted reward-empty" id="reward-empty" hidden>Photos coming soon.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <p>© <span id="year">2026</span> Alankar Dutta · <a href="https://github.com/al0nkr">github.com/al0nkr</a></p>
   </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+    <figure>
+      <img id="lightbox-img" alt="" />
+      <figcaption>
+        <span class="place" id="lightbox-place"></span>
+        <span id="lightbox-caption"></span>
+      </figcaption>
+    </figure>
+    <button class="icon-btn lightbox-close" id="lightbox-close" type="button" aria-label="Close">✕</button>
+    <button class="icon-btn lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous photo">←</button>
+    <button class="icon-btn lightbox-next" id="lightbox-next" type="button" aria-label="Next photo">→</button>
+  </dialog>
 
   <button id="to-top" class="icon-btn" type="button" hidden aria-label="Back to top">↑</button>
   <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>

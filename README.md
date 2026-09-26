@@ -26,4 +26,11 @@ python3 -m http.server 8000
 - Avatar: `https://avatars.githubusercontent.com/u/129394458?v=4` (GitHub avatar, no local image).
 - Fonts: add one entry to `SITE_FONTS` in `fonts.js` (label, CSS stack, Google Fonts URL, optional size `scale`); it appears in the nav picker automatically. Default is Rubik.
 - Themes: color tokens live at the top of `styles.css` (dark `#050e1c` default, cream `#fff0db` light via `data-theme="light"`).
+- Photo reel (reward section under Contact): drop images into `photos/` and list them in `photos/photos.json`, newest first:
+  ```json
+  [
+    { "src": "photos/beijing.jpg", "place": "Beijing, China", "caption": "Forbidden City at dusk", "date": "Jul 2025", "alt": "Palace rooftops at sunset" }
+  ]
+  ```
+  Only `src` is required; `place` shows as the highlighted pin. Keep images around 1600px on the long edge (JPEG/WebP, under ~400 KB) so the reel loads fast. With an empty list the reel shows "Photos coming soon".
 - Contact: email only, no phone/resume per owner request. No private company metrics included.

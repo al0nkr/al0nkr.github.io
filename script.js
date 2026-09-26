@@ -280,4 +280,181 @@
   }
 
   loadRepos();
+
+  // Reward: photo reel. Photos are listed in photos/photos.json as
+  // [{ "src": "photos/x.jpg", "place": "Beijing, China", "caption": "...", "date": "Jul 2025", "alt": "..." }]
+  // and fetched the first time the reel is opened.
+  var rewardToggle = document.getElementById("reward-toggle");
+  var rewardPanel = document.getElementById("reward-panel");
+  var carousel = document.getElementById("carousel");
+  var track = document.getElementById("carousel-track");
+  var dots = document.getElementById("carousel-dots");
+  var emptyMsg = document.getElementById("reward-empty");
+  var lightbox = document.getElementById("lightbox");
+  var photos = null;
+  var current = 0;
+
+  function slides() { return track ? Array.prototype.slice.call(track.children) : []; }
+
+  function markCurrent(i) {
+    current = i;
+    slides().forEach(function (s, j) { s.classList.toggle("is-current", j === i); });
+    Array.prototype.forEach.call(dots.children, function (d, j) {
+      d.setAttribute("aria-selected", j === i ? "true" : "false");
+      d.tabIndex = j === i ? 0 : -1;
+    });
+  }
+
+  function goTo(i) {
+    var list = slides();
+    if (!list.length) return;
+    i = (i + list.length) % list.length;
+    var s = list[i];
+    track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2 });
+    markCurrent(i);
+  }
+
+  function renderPhotos() {
+    if (!photos.length) {
+      emptyMsg.hidden = false;
+      return;
+    }
+    track.innerHTML = photos
+      .map(function (p, i) {
+        var alt = p.alt || p.caption || p.place || "Photo " + (i + 1);
+        return (
+          '<figure class="slide" aria-roledescription="slide" aria-label="' + (i + 1) + " of " + photos.length + '">' +
+          '<button class="slide-media" type="button" data-index="' + i + '" aria-label="Enlarge: ' + escapeHtml(alt) + '">' +
+          '<img src="' + escapeHtml(p.src) + '" alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async" />' +
+          (p.place ? '<span class="place">' + escapeHtml(p.place) + "</span>" : "") +
+          "</button>" +
+          ((p.caption || p.date)
+            ? "<figcaption><span>" + escapeHtml(p.caption || "") + '</span><span class="date">' + escapeHtml(p.date || "") + "</span></figcaption>"
+            : "") +
+          "</figure>"
+        );
+      })
+      .join("");
+    dots.innerHTML = photos
+      .map(function (p, i) {
+        return '<button type="button" role="tab" aria-label="Photo ' + (i + 1) + (p.place ? ": " + escapeHtml(p.place) : "") + '"></button>';
+      })
+      .join("");
+    carousel.hidden = false;
+    var single = photos.length < 2;
+    document.getElementById("carousel-prev").hidden = single;
+    document.getElementById("carousel-next").hidden = single;
+    dots.hidden = single;
+    requestAnimationFrame(function () { goTo(0); });
+  }
+
+  function loadPhotos() {
+    if (photos) return;
+    photos = [];
+    fetch("photos/photos.json", { cache: "no-cache" })
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .then(function (list) { photos = Array.isArray(list) ? list.filter(function (p) { return p && p.src; }) : []; })
+      .catch(function () { photos = []; })
+      .then(renderPhotos);
+  }
+
+  if (rewardToggle && rewardPanel && track) {
+    rewardToggle.addEventListener("click", function () {
+      var open = rewardToggle.getAttribute("aria-expanded") !== "true";
+      rewardToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      rewardPanel.classList.toggle("open", open);
+      if (open) rewardPanel.removeAttribute("inert");
+      else rewardPanel.setAttribute("inert", "");
+      rewardToggle.firstChild.textContent = open ? "Close the photo reel " : "Open the photo reel ";
+      if (open) loadPhotos();
+    });
+
+    document.getElementById("carousel-prev").addEventListener("click", function () { goTo(current - 1); });
+    document.getElementById("carousel-next").addEventListener("click", function () { goTo(current + 1); });
+    dots.addEventListener("click", function (e) {
+      var i = Array.prototype.indexOf.call(dots.children, e.target);
+      if (i >= 0) goTo(i);
+    });
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(current + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current - 1); }
+    });
+
+    // Keep the current slide in sync with swipes and trackpad scrolling.
+    var scrollTick = false;
+    track.addEventListener("scroll", function () {
+      if (scrollTick) return;
+      scrollTick = true;
+      requestAnimationFrame(function () {
+        scrollTick = false;
+        var mid = track.scrollLeft + track.clientWidth / 2;
+        var best = 0, bestDist = Infinity;
+        slides().forEach(function (s, i) {
+          var d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - mid);
+          if (d < bestDist) { bestDist = d; best = i; }
+        });
+        if (best !== current) markCurrent(best);
+      });
+    }, { passive: true });
+
+    // Enlarged view
+    track.addEventListener("click", function (e) {
+      var btn = e.target.closest(".slide-media");
+      if (!btn) return;
+      var i = Number(btn.getAttribute("data-index"));
+      if (i !== current) return goTo(i); // side slides: bring to center first
+      openLightbox(i);
+    });
+  }
+
+  // Size the photo from its natural dimensions so the frame hugs it exactly.
+  function fitLightboxImg() {
+    var img = document.getElementById("lightbox-img");
+    if (!img.naturalWidth) return;
+    var maxW = Math.min(window.innerWidth * 0.94, 1200) - 2;
+    var maxH = window.innerHeight * 0.94 - 64;
+    var scale = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight, 1);
+    img.style.width = Math.round(img.naturalWidth * scale) + "px";
+  }
+
+  function showInLightbox(i) {
+    var p = photos[i];
+    current = i;
+    var img = document.getElementById("lightbox-img");
+    img.style.width = "";
+    img.onload = fitLightboxImg;
+    img.src = p.src;
+    if (img.complete) fitLightboxImg();
+    img.alt = p.alt || p.caption || p.place || "";
+    var place = document.getElementById("lightbox-place");
+    place.textContent = p.place || "";
+    place.hidden = !p.place;
+    document.getElementById("lightbox-caption").textContent = [p.caption, p.date].filter(Boolean).join(" · ");
+    var single = photos.length < 2;
+    document.getElementById("lightbox-prev").hidden = single;
+    document.getElementById("lightbox-next").hidden = single;
+  }
+
+  function openLightbox(i) {
+    if (!lightbox || typeof lightbox.showModal !== "function") {
+      window.open(photos[i].src, "_blank", "noopener");
+      return;
+    }
+    showInLightbox(i);
+    lightbox.showModal();
+  }
+
+  if (lightbox) {
+    var step = function (d) { showInLightbox((current + d + photos.length) % photos.length); };
+    document.getElementById("lightbox-close").addEventListener("click", function () { lightbox.close(); });
+    document.getElementById("lightbox-prev").addEventListener("click", function () { step(-1); });
+    document.getElementById("lightbox-next").addEventListener("click", function () { step(1); });
+    lightbox.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    });
+    lightbox.addEventListener("click", function (e) { if (e.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener("close", function () { goTo(current); });
+    window.addEventListener("resize", function () { if (lightbox.open) fitLightboxImg(); });
+  }
 })();
