@@ -14,19 +14,32 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ["styles.css", "script.js", "fonts.js",
-          "favicon.svg", "favicon-light.svg", "favicon-32.png", "favicon-light-32.png", "apple-touch-icon.png"]
+          "favicon-32.png", "favicon-light-32.png", "favicon-64.png", "favicon-light-64.png", "apple-touch-icon.png"]
+# Images referenced from styles.css (stamped inside the CSS first, so the CSS hash covers them)
+CSS_ASSETS = ["avatar.jpg", "avatar-light.jpg"]
 PAGES = ["index.html", "404.html"]
 
 
+def stamp(text, hashes):
+    for asset, h in hashes.items():
+        text = re.sub(r'(["\'])' + re.escape(asset) + r'(\?v=[0-9a-f]*)?\1',
+                      lambda m: f"{m.group(1)}{asset}?v={h}{m.group(1)}", text)
+    return text
+
+
 def main():
+    css_path = ROOT / "styles.css"
+    css_hashes = {a: hashlib.sha1((ROOT / a).read_bytes()).hexdigest()[:8] for a in CSS_ASSETS}
+    css = css_path.read_text()
+    new_css = stamp(css, css_hashes)
+    if new_css != css:
+        css_path.write_text(new_css)
+        print("updated styles.css")
     hashes = {a: hashlib.sha1((ROOT / a).read_bytes()).hexdigest()[:8] for a in ASSETS}
     for page in PAGES:
         path = ROOT / page
         html = path.read_text()
-        new = html
-        for asset, h in hashes.items():
-            new = re.sub(r'(["\'])' + re.escape(asset) + r'(\?v=[0-9a-f]*)?\1',
-                         lambda m: f"{m.group(1)}{asset}?v={h}{m.group(1)}", new)
+        new = stamp(html, hashes)
         if new != html:
             path.write_text(new)
             print(f"updated {page}")

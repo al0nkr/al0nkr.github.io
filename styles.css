@@ -190,22 +190,10 @@ h4 { font-size: 1rem; font-weight: 500; }
 /* ---------- Hero ---------- */
 .hero { display: flex; gap: 2rem; align-items: center; margin-top: 0; }
 .avatar { width: 112px; height: 112px; border-radius: 22%; border: 1px solid var(--line); flex-shrink: 0; }
-/* Bot-face avatar (same art as the tab icon, generated together); colours follow the site theme. */
-.bot-avatar { display: block; overflow: hidden; }
-.bot-avatar {
-  --bot-bg: #26282e; --bot-face: #f4eee6; --bot-blush: #e3a3a3; --bot-hair: #5a1e2c; --bot-shade: #3b121b; --bot-ear: #7a3846; --bot-spot: #471622; --bot-eye: #121114; --bot-blush-op: 0.45;
-}
-[data-theme="light"] .bot-avatar {
-  --bot-bg: #cddcf0; --bot-face: #fbf7f1; --bot-blush: #e29c9c; --bot-hair: #4f1826; --bot-shade: #33101a; --bot-ear: #86424f; --bot-spot: #3d1320; --bot-eye: #1a1416; --bot-blush-op: 0.5;
-}
-.bot-avatar .bot-bg { fill: var(--bot-bg); }
-.bot-avatar .bot-face { fill: var(--bot-face); }
-.bot-avatar .bot-hair { fill: var(--bot-hair); }
-.bot-avatar .bot-shade { fill: var(--bot-shade); }
-.bot-avatar .bot-ear { fill: var(--bot-ear); }
-.bot-avatar .bot-spot { stroke: var(--bot-spot); }
-.bot-avatar .bot-blush { fill: var(--bot-blush); opacity: var(--bot-blush-op); }
-.bot-avatar .bot-eye { fill: var(--bot-eye); }
+/* Avatar: night crop in dark mode, day crop in light mode. As a CSS background
+   only the active theme's image is downloaded, and it swaps with the toggle. */
+.photo-avatar { background: #0b1b3a url("avatar.jpg?v=87cab4d5") center / cover no-repeat; }
+[data-theme="light"] .photo-avatar { background-color: #8fb6ea; background-image: url("avatar-light.jpg?v=2737c2cd"); }
 .subtitle { color: var(--muted); margin: 0.3rem 0 0.9rem; font-size: 1.05rem; }
 .hero-text p:not(.subtitle) { max-width: 38em; }
 .cta-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.4rem; }
